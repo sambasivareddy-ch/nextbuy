@@ -1,0 +1,10 @@
+.page-nav_wrapper a {
+    text-transform: capitalize;
+    text-decoration: none;
+    color: var(--black-color);
+}
+
+.page-nav_wrapper a:hover {
+    text-decoration: underline;
+    color: blueviolet;
+}

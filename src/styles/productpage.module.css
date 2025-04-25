@@ -1,0 +1,156 @@
+.main-page_wrapper {
+    width: 100%;
+    margin: 50px 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page {
+    width: 80%;
+    box-sizing: border-box;
+}
+
+.product-details_wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 50px 0;
+    box-sizing: border-box;
+}
+
+.product-images img{
+    width: 400px;
+}
+
+.product-details .product-basic_details {
+    line-height: 1.5;
+}
+
+.product-basic_details h2 {
+    color: var(--charcoal-color);
+}
+
+.product-colors {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.product-colors span {
+    display: block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: aliceblue;
+    cursor: pointer;
+    border: solid 1px #000;
+}
+
+.product-colors .red {
+    background-color: #f44336;
+}
+
+.product-colors .blue {
+    background-color: #42a5f5;
+}
+
+.product-colors .white {
+    background-color: #fafafa;
+}
+
+.product-colors .black {
+    background-color: #000;
+}
+
+.product-colors .purple {
+    background-color: #9c27b0;
+}
+
+.product-specifications {
+    margin: 20px 0;
+    list-style: none;
+}
+
+.product-specifications li {
+    margin: 10px 0;
+}
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+}
+
+.action-buttons button {
+    width: 100%;
+    border: solid 1px var(--black-color);
+}
+
+.action-buttons .wishlist_btn {
+    background-color: var(--white-color);
+}
+
+.action-buttons .cart_btn {
+    background-color: var(--black-color);
+    color: var(--white-color);
+}
+
+.delivary-info_wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.delivary-info {
+    width: 100%;
+    display: flex;
+    gap: 0 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white-shade);
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.delivary-info svg {
+    width: 30px;
+    height: 30px;
+}
+
+@media screen and (max-width: 1200px){
+    .page {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .page {
+        width: 90%;
+    }
+    .product-images img {
+        width: 600px;
+    }
+    .product-details_wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .page {
+        width: 80%;
+    }
+    .product-images img {
+        width: 300px;
+    }
+    .delivary-info_wrapper {
+        flex-wrap: wrap;
+    }
+}

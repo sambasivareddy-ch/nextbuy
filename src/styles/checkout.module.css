@@ -1,0 +1,211 @@
+.main-page_wrapper {
+    width: 100%;
+    margin: 50px 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page {
+    width: 80%;
+}
+
+.main-wrapper {
+    display: grid;
+    grid-template-columns: 60% 35%;
+    gap: 10px;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin: 20px 0;
+}
+
+.summary_wrapper {
+    padding: 20px;
+    box-sizing: border-box;
+    border: solid 2px whitesmoke;
+}
+
+.summary_wrapper h2 {
+    margin: 20px 0;
+}
+
+.summary-cart_card {
+    box-shadow: none;
+    background-color: var(--white-shade);
+    margin: 5px;
+}
+
+.summary-cart_card img {
+    width: 40px;
+}
+
+.order-summary_wrapper {
+    padding: 10px;
+    box-sizing: border-box;
+    border-bottom: solid 1px #000;
+}
+
+.order-summary_wrapper .price {
+    margin: 20px 0;
+    color: #2196f3;
+}
+
+.order-summary_addresses {
+    margin: 20px 0;
+}
+
+.address-main_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.address-main_header button {
+    outline: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.address-main_header button:hover {
+    transform: scale(0.9);
+}
+
+.add-address_form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px 10px;
+}
+
+.add-address_form button {
+    grid-column: span 2;
+    width: 100%;
+    background-color: var(--black-color);
+    color: var(--white-color);
+    border: solid 1px var(--black-color)
+}
+
+.add-address_form button:hover {
+    color: var(--black-color);
+    background-color: var(--white-color);
+    transform: scale(0.99);
+}
+
+.credit-card_wrapper {
+    width: 100%;
+    height: 225px;
+    margin: 10px 0;
+    padding: 20px;
+    border-radius: 10px;
+    color: var(--white-color);
+    background: #00B4DB; 
+    background: -webkit-linear-gradient(to right, #0083B0, #00B4DB);  
+    background: linear-gradient(to right, #0083B0, #00B4DB); 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* .credit-card_wrapper:hover {
+    transform: scale(0.98);
+} */
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header img {
+    height: 40px;
+}
+
+.card-number_wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+.card-number {
+    letter-spacing: 5px;
+    font-size: var(--font-size-regular);
+}
+
+.card-owner_details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-owner {
+    line-height: 1.5;
+}
+
+.card-owner h3 {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.card-payment_form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.card-payment_form button {
+    width: 100%;
+    grid-column: span 2;
+    background-color: var(--black-color);
+    color: var(--white-color);
+}
+
+.card-payment_form button:hover {
+    transform: scale(0.98);
+    color: var(--black-color);
+    background-color: var(--white-color);
+}
+
+@media screen and (max-width: 1200px){
+    .page {
+        width: 90%;
+    }
+    .main-wrapper {
+        grid-template-columns: 60% 40%;
+        gap: 20px;
+    }
+    .summary-cart_card {
+        display: flex;
+        flex-direction: column;
+        gap: 20px 0;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .main-wrapper {
+        grid-template-columns: 50% 50%;
+        gap: 20px;
+    }
+    .summary_wrapper {
+        padding: 10px;
+    }
+    .card-number {
+        letter-spacing: 2px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .main-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .card-number {
+        font-size: var(--font-size-small);
+    }
+}

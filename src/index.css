@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* All Base Styles */
+:root {
+  --black-color: #000;
+  --charcoal-color: #2E2E2E;
+  --white-color: #FFF;
+  --gray-color: #D2D2DA;
+  --gray-light: #EDEDED;
+  --white-shade: #FAFAFA;
+  --red-color: #FF0000;
+  --dark-violet: #211C24;
+
+  --font-family: "Raleway", sans-serif;
+  --font-light: 200;
+  --font-weight: 400;
+  --font-bold: 700;
+
+  --font-size-xxl: 5em;
+  --font-size-xl: 72px;
+  --font-size-l: 64px;
+  --font-size-medium: 30px;
+  --font-size-regular: 24px;
+  --font-size-small: 16px;
+}
+
+* {
+  font-family: var(--font-family);
+  padding: 0;
+  margin: 0;
+}

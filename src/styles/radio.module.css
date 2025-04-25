@@ -1,0 +1,25 @@
+.radio {
+    cursor: pointer;
+}
+
+.radio input {
+    display: none;
+}
+
+.radio p {
+    font-weight: var(--font-bold);
+    color: rgba(0, 0, 0, 0.5);
+    font-size: var(--font-size-small);
+}
+
+.radio input:checked + p {
+    font-weight: var(--font-bold);
+    text-decoration: underline;
+    color: var(--black-color);
+}
+
+@media screen and (max-width: 500px) {
+    .radio p {
+        font-size: 10px;
+    }
+}

@@ -1,0 +1,31 @@
+.button {
+    outline: none;
+    width: 190px;
+    border: solid 1px var(--black-color);
+    padding: 15px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.button_shop_now {
+    margin: 10px 0;
+    padding: 16px 56px;
+}
+
+.button_buy_now {
+    padding: 16px 64px;
+}
+
+.button:hover {
+    transform: scale(0.95);
+}
+
+.link-btn a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.button:hover a {
+    color: var(--black-color);
+}

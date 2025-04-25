@@ -1,0 +1,76 @@
+.footer-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--black-color);
+    color: var(--white-color);
+    padding: 50px;
+}
+
+.footer-main {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.company-info {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.company-info p {
+    line-height: 2;
+}
+
+.company-social_profiles {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.company-social_profiles a {
+    text-decoration: none;
+    color: var(--white-color);
+}
+
+.company-social_profiles a:hover {
+    color: blueviolet ;
+}
+
+.company-services .services {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.services a {
+    text-decoration: none;
+    color: var(--white-color);
+    font-size: 12px;
+}
+
+.services a:hover {
+    text-decoration: underline;
+    color: blueviolet;
+}
+
+@media screen and (max-width: 1000px) {
+    .company-info {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .company-info {
+        width: 250px;
+    }
+}

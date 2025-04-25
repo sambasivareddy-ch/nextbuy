@@ -1,0 +1,111 @@
+.banner-main {
+    width: 100%;
+    background-color: var(--dark-violet);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner-wrapper {
+    width: 100%;
+    height: 650px;
+    padding: 20px;
+    color: var(--white-color);
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.banner-text {
+    line-height: 1.5;
+}
+
+.banner-text .catchy-caption {
+    color: var(--gray-color);
+    font-size: var(--font-size-regular);
+}
+
+.banner-text .brand-name {
+    font-size: var(--font-size-xxl);
+    font-weight: var(--font-light);
+}
+
+.banner-text .brand-name span:nth-child(2) {
+    font-weight: var(--font-bold);
+}
+
+.banner-text p {
+    color: var(--gray-color);
+    font-size: var(--font-size-small);
+}
+
+.banner-image {
+    height: 100%;
+    position: relative;
+    /* z-index: -1; */
+}
+
+.banner-image img {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    overflow: hidden;
+}
+
+.shop-now_btn {
+    border: solid 1px var(--white-color);
+    background-color: transparent;
+    margin: 10px 0;
+    color: var(--white-color);
+    cursor: pointer;
+}
+
+.shop-now_btn:hover {
+    background-color: var(--white-color);
+    color: var(--black-color);
+}
+
+@media screen and (max-width: 1250px) {
+    .banner-wrapper {
+        flex-direction: column;
+    }
+    .banner-text {
+        width: 100%;
+        padding: 20px;
+    }
+    .banner-image img {
+        top: 120%;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    .banner-wrapper {
+        width: 100%;
+        flex-direction: column;
+        padding: 20px;
+    }
+    .banner-text {
+        z-index: 999;   
+        padding: 20px;
+        background-color: var(--dark-violet);
+    }
+    .banner-text .catchy-caption {
+        color: var(--gray-color);
+        font-size: var(--font-size-small);
+    }
+    
+    .banner-text .brand-name {
+        /* font-size: var(--font-size-xxl);  */
+        font-weight: var(--font-light);
+    }
+    
+    .banner-text .brand-name span:nth-child(2) {
+        font-weight: var(--font-bold);
+    }
+}
