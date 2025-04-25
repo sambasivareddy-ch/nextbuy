@@ -1,6 +1,6 @@
 import React from "react";
 
-import SubBannerItem from "../ui/SubBannerItem";
+import SubBannerItem from "../product-ui/SubBannerItem";
 import Button from "../ui/Button";
 import styles from "../../styles/subbanner.module.css"
 
