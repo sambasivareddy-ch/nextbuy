@@ -76,13 +76,13 @@
     .banner-wrapper {
         flex-direction: column;
     }
-    .banner-text {
+/*     .banner-text {
         width: 100%;
         padding: 20px;
-    }
-    .banner-image img {
+    } */
+/*     .banner-image img {
         top: 120%;
-    }
+    } */
 }
 
 @media screen and (max-width: 620px) {
