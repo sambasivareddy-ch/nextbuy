@@ -1,7 +1,7 @@
 import React from "react";
 
 import Button from "../ui/Button";
-import iphone from "../../assets/iphone.png"
+// import iphone from "../../assets/iphone.png"
 import styles from "../../styles/banner.module.css";
 
 const Banner: React.FC<{}> = () => {
