@@ -1,0 +1,19 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Add Product 
+        link(rel="stylesheet", href="./css/add-product.css")
+    body 
+        .add-product_wrapper 
+            .add-product_main 
+                h2 Add Product 
+                form.add-product_form__wrapper(method="POST", action="/add-product")
+                    input(type="text", name="product", placeholder="Product Name")
+                    input(type="text", name="brand", placeholder="Product Brand")
+                    input(type="text", name="category", placeholder="Product Category")
+                    input(type="number", name="price", placeholder="Product Price")
+                    input(type="text", name="image", placeholder="Product Image URL")
+                    textarea(name="description", cols="30", rows="10")
+                    button.submit(type="submit") Submit 
