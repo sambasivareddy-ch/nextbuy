@@ -1,4 +1,5 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import './App.css'
 import Home from './pages/Home'
@@ -12,26 +13,44 @@ import CartPage from './pages/CartPage';
 import WishlistPage from './pages/WishlistPage';
 import CheckoutPage from './pages/CheckoutPage';
 import ProfilePage from './pages/ProfilePage';
+import PageNotFound from './pages/PageNotFound';
+
+import Login from './components/forms/Login';
+import CreateAccount from './components/forms/CreateAccount';
 
 import { Analytics } from "@vercel/analytics/react"
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(true); // For testing purposes, set to true to bypass login
+    }
+  })
+
   return (
     <>
       <Routes>
-        <Route path="/computers" element={<ComputersPage/>}/>
-        <Route path="/:category/:id" element={<ProductPage/>}/>
-        <Route path="/phone" element={<PhonePage/>}/>
-        <Route path="/smartwatch" element={<SmartWatchesPage/>}/>
-        <Route path="/gaming" element={<GamingPage/>}/>
-        <Route path="/head-phones" element={<HeadPhonesPage/>}/>
-        <Route path="/cart" element={<CartPage/>}/>
-        <Route path="/checkout" element={<CheckoutPage/>}/>
-        <Route path="/favorite" element={<WishlistPage/>}/>
-        <Route path="/profile" element={<ProfilePage/>}/>
-        <Route index element={<Home/>}/>
+        {isLoggedIn && <Route path="/computers" element={<ComputersPage />} />}
+        {isLoggedIn && <Route path='/:category/:id' element={<ProductPage />} />}
+        {isLoggedIn && <Route path="/phone" element={<PhonePage />} />}
+        {isLoggedIn && <Route path="/smartwatch" element={<SmartWatchesPage />} />}
+        {isLoggedIn && <Route path="/gaming" element={<GamingPage />} />}
+        {isLoggedIn && <Route path="/head-phones" element={<HeadPhonesPage />} />}
+        {isLoggedIn && <Route path="/cart" element={<CartPage />} />}
+        {isLoggedIn && <Route path="/checkout" element={<CheckoutPage />} />}
+        {isLoggedIn && <Route path="/favorite" element={<WishlistPage />} />}
+        {isLoggedIn && <Route path="/profile" element={<ProfilePage />} />}
+        {isLoggedIn && <Route index element={<Home />} />}
+        {!isLoggedIn && <Route index element={<Login setIsLoggedIn={() => { setIsLoggedIn(true) }} />} />}
+        {!isLoggedIn && <Route path="/create-account" element={<CreateAccount setIsLoggedIn={() => { setIsLoggedIn(true) }} />} />}
+        <Route path="*" element={<PageNotFound/>} />
       </Routes>
-      <Analytics/>
+      <Analytics />
     </>
   )
 }

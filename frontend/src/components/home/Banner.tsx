@@ -17,9 +17,6 @@ const Banner: React.FC<{}> = () => {
                     <p>Created to change everything for the better. For everyone</p>
                     <Button type="button" button_text="Shop Now" class_name={styles['shop-now_btn']}/>
                 </div>
-{/*                 <div className={styles['banner-image']}>
-                    <img src={iphone} alt="Iphone Image"/>
-                </div> */}
             </div>
         </div>
     )

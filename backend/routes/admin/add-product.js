@@ -7,8 +7,6 @@ router.route('/add-product')
         res.render('add-product')
     })
     .post((req, res) => {
-        console.log(req.body);
-
         res.json({
             success: true,
         })

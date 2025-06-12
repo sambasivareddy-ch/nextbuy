@@ -70,14 +70,6 @@ const CartPage: React.FC = () => {
                                 <p>Subtotal</p>
                                 <p>&#36;{cart.totalPrice}</p>
                             </div>
-                            {/* <div className={styles['order-info']}>
-                                <p>Estimated Tax</p>
-                                <p>&#36;{cart.totalPrice === 0? 0: estimatedTax}</p>
-                            </div>
-                            <div className={styles['order-info']}>
-                                <p>Estimated shipping & Handling</p>
-                                <p>&#36;{cart.totalPrice === 0? 0: estimatedShippingTax}</p>
-                            </div> */}
                             <div className={styles['order-info_total']}>
                                 <p>Total</p>
                                 <p>&#36; {cart.totalPrice}</p>

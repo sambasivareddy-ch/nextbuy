@@ -20,7 +20,7 @@ app.use(express.static('public'));
 app.set('view engine', 'pug');
 
 // Base route
-app.get('/', (req, res) => {
+app.get('/hello', (req, res) => {
     res.send('Hello World!!')
 })
 

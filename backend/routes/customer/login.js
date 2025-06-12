@@ -1,5 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 import Customer from '../../models/customer.js';
 
@@ -15,9 +16,19 @@ router.post('/', async (req, res) => {
             const matched = await bcrypt.compare(password, customer.password);
 
             if (matched) {
+                const token = jwt.sign({ userId: customer._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
                 res.status(200).json({
                     success: true,
-                    message: "login successfull"
+                    message: "login successful",
+                    token,
+                    customer: {
+                        id: customer._id,
+                        name: customer.name,
+                        email: customer.email,
+                        phone: customer.phone,
+                        address: customer.address
+                    }
                 })
             } else {
                 res.status(401).json({
