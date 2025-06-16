@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addressState } from './addressSlice';
 
 interface UserState {
     user: {
