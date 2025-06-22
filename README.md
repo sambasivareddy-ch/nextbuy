@@ -60,7 +60,7 @@ Codebase is designed with separation of concerns (e.g., using `actions`, `reduce
 ---
 ## ✅ To-Do (Coming Soon)
 - [x] Authentication (Login/Register)
-- [ ] Profile Management Page
+- [x] Profile Management Page
 - [ ] Real Payment Gateway Integration
 - [ ] CI/CD & Docker Deployment
 - [ ] Enhanced UI/UX animations
