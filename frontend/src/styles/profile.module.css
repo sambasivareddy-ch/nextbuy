@@ -15,10 +15,16 @@
     margin: 20px 0;
 }
 
-.profile-info {
-    margin: 30px 0;
+.profile-header {
     display: flex;
-    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+.profile-info_form, .address_form {
+    margin: 30px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
@@ -33,4 +39,30 @@
 
 .profile-info a {
     font-size: 18px;
+}
+
+.update-btn {
+    background-color: #00e676;
+}
+
+.profile-info_wrapper {
+    margin: 30px 0;
+}
+
+.edit-btn {
+    width: fit-content;
+    outline: none;
+    padding: 10px;
+    background-color: transparent;
+}
+
+.edit-btn:hover {
+    background-color: #448aff;
+    color: #fff;
+}
+
+@media screen and (max-width: 560px){
+    .profile-info_form, .address_form {
+        grid-template-columns: 1fr;
+    }
 }

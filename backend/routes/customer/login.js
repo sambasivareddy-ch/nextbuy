@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
                         name: customer.name,
                         email: customer.email,
                         phone: customer.phone,
-                        address: customer.address
+                        password: customer.password,
                     }
                 })
             } else {

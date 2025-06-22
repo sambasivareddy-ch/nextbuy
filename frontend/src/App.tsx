@@ -44,7 +44,7 @@ function App() {
         {isLoggedIn && <Route path="/cart" element={<CartPage />} />}
         {isLoggedIn && <Route path="/checkout" element={<CheckoutPage />} />}
         {isLoggedIn && <Route path="/favorite" element={<WishlistPage />} />}
-        {isLoggedIn && <Route path="/profile" element={<ProfilePage />} />}
+        {isLoggedIn && <Route path="/profile" element={<ProfilePage userName='Samba Siva Reddy' emailAddress='sambachinta.24@gmail.com' phoneNumber='7337375243' password='samba@123' address={null}/>} />}
         {isLoggedIn && <Route index element={<Home />} />}
         {!isLoggedIn && <Route index element={<Login setIsLoggedIn={() => { setIsLoggedIn(true) }} />} />}
         {!isLoggedIn && <Route path="/create-account" element={<CreateAccount setIsLoggedIn={() => { setIsLoggedIn(true) }} />} />}

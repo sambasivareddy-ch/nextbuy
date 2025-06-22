@@ -9,7 +9,9 @@ const Input: React.FC<{
     placeholder: string,
     required: boolean,
     inputRef: RefObject<HTMLInputElement | null>
-    name?: string
+    name?: string,
+    readOnly?: boolean,
+    value?: string | number | undefined | readonly string[],
 }> = (props) => {
 
     return <input 
@@ -19,6 +21,8 @@ const Input: React.FC<{
         className={styles['input']}
         ref={props.inputRef}
         name={props.name ? props.name : undefined}
+        value={props.value}
+        readOnly={props.readOnly}
     />
 }
 
