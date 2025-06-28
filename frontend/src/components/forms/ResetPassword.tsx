@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import Input from '../ui/Input';
@@ -8,35 +7,24 @@ import Button from '../ui/Button';
 import Toast from '../ui/Toast';
 import styles from '../../styles/form.module.css';
 import useApi from '../../hooks/useApi';
-import { setUser } from '../../store/userSlice';
 
-const Login: React.FC = () => {
+const ResetPassword: React.FC = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
-    const dispatcher = useDispatch();
     const navigate = useNavigate();
 
     const [success, setSuccess] = useState<boolean>(false);
     const [validationError, setValidationError] = useState<string | null>(null);
 
-    const [apiCaller, apiData, isLoading, error] = useApi(`http://localhost:5000/auth/login`, 'POST', '');
+    const [apiCaller, apiData, isLoading, error] = useApi(`http://localhost:5000/auth/reset-password`, 'PUT', '');
 
     useEffect(() => {
         if (apiData) {
             setSuccess(true);
             setValidationError(null);
-            dispatcher(setUser({
-                user: {
-                    id: apiData.customer?.id,
-                    email: apiData.customer?.email,
-                    name: apiData.customer?.name,
-                    phone: apiData.customer?.phone,
-                },
-                token: apiData.token
-            }))
-            navigate('/');
             emailRef.current!.value = '';
             passwordRef.current!.value = '';
+            navigate('/');
         } else if (error) {
             setSuccess(false);
             setValidationError(error);
@@ -71,7 +59,7 @@ const Login: React.FC = () => {
     return (
         <div className={styles.formContainer} onSubmit={formSubmitHandler}>
             <form className={styles.form}>
-                <h2 className={styles.formTitle}>Login</h2>
+                <h2 className={styles.formTitle}>Update Password</h2>
                 <Input
                     type="email"
                     name="email"
@@ -82,23 +70,20 @@ const Login: React.FC = () => {
                 <Input
                     type="password"
                     name="password"
-                    placeholder="Password"
+                    placeholder="Reset Password"
                     inputRef={passwordRef}
                     required={true}
                 />
                 <Button
                     type="submit"
                     class_name={styles.formButton}
-                    button_text='Login'
+                    button_text='Update Password'
                 />
                 <p className={styles.formText}>
-                    Don't have an account? <Link to="/create-account">Create Account</Link>
-                </p>
-                <p className={styles.formText}>
-                    Forgot your password? <Link to="/forget-password">Reset Password</Link>
+                    Remembered Password? <Link to="/">Login into Account</Link>
                 </p>
             </form>
-            {success && <Toast message="Sign up successful!" type="success" />}
+            {success && <Toast message="Updated password successful!" type="success" />}
             {error && <Toast message={error} type="failure" />}
             {validationError && <Toast message={validationError} type="info" />}
             {isLoading && <Toast message="Loading..." type="info" />}
@@ -106,4 +91,4 @@ const Login: React.FC = () => {
     );
 }  
 
-export default Login;
+export default ResetPassword;

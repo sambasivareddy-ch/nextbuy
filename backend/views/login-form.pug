@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Admin Login 
+        link(rel="stylesheet", href="./css/login-form.css")
+    body 
+        .admin-login_wrapper
+            .admin-login_main
+                h2 Admin Login
+                form.admin-form(method="POST", action="/admin-login")
+                    input(type="text", name="email", placeholder="Admin Email")
+                    input(type="password", name="password", placeholder="Admin Password")
+                    button.submit(type="submit") Submit 

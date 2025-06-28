@@ -4,11 +4,13 @@ import bodyParser from "body-parser";
 import cors from 'cors';
 
 import ConnectToDB from "./utils/connect.js";
-import createCustomerRoute from "./routes/customer/create.js";
-import loginCustomerRoute from "./routes/customer/login.js";
+import createCustomerRoute from "./routes/customer/auth/create.js";
+import loginCustomerRoute from "./routes/customer/auth/login.js";
 import addProductRoute from "./routes/admin/add-product.js";
 import addressRoute from "./routes/customer/address.js";
-import postAddressRoute from "./routes/customer/post-address.js";
+import modifyAddressRoute from "./routes/customer/modify-address.js";
+import resetPasswordRoute from "./routes/customer/auth/reset-password.js";
+import adminLoginFormRoute from "./routes/admin/admin-login.js";
 import verifyToken from "./middleware/verifyUser.js";
 
 // Express Application
@@ -29,9 +31,11 @@ app.get('/hello', (req, res) => {
 
 app.use("/auth", createCustomerRoute);
 app.use("/auth", loginCustomerRoute);
-app.use(addProductRoute);
+app.use("/auth", resetPasswordRoute);
+app.use("/admin", addProductRoute);
+app.use(adminLoginFormRoute);
 app.use('/user', verifyToken, addressRoute);
-app.use('/user', verifyToken, postAddressRoute);
+app.use('/user', verifyToken, modifyAddressRoute);
 
 // Listening at configured port
 const APP_PORT = process.env.PORT || 5001;

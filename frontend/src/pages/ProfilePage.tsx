@@ -1,5 +1,5 @@
 import React, { FormEvent, useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import PageSetter from "../components/product-ui/PageSetter";
@@ -7,6 +7,7 @@ import PageNavigation from "../components/product-ui/PageNavigation";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import Loading from "../components/ui/Loading";
+import Toast from "../components/ui/Toast";
 import styles from "../styles/profile.module.css";
 
 import { UserInfo } from '../types/types';
@@ -19,6 +20,7 @@ const ProfilePage: React.FC<{
 }> = (props) => {
     const userInfo: any = useSelector<RootState>((state) => state.user);
     const location = useLocation();
+    const navigate = useNavigate();
 
     const userNameRef = useRef<HTMLInputElement>(null);
     const emailAddressRef = useRef<HTMLInputElement>(null);
@@ -46,7 +48,8 @@ const ProfilePage: React.FC<{
         fetchAddress();
     }, [userInfo]);
 
-    const [addressUpdateCaller, _, __, ___] = useApi('http://localhost:5000/user/address', "POST", userInfo?.token);
+    const [newAddressApiCaller, _, isNewAddressSaving, isNewAddressSaveCauseError] = useApi('http://localhost:5000/user/address', "POST", userInfo?.token);
+    const [modifyAddressApiCaller, ____, isAddressUpdating, isAddressUpdatingCauseError] = useApi('http://localhost:5000/user/address', 'PUT', userInfo?.token);
 
     const addressUpdateHandler = async (e: FormEvent) => {
         e.preventDefault();
@@ -60,17 +63,32 @@ const ProfilePage: React.FC<{
         const pincode = pincodeRef.current?.value;
         const phone = phoneRef.current?.value;
 
-        await addressUpdateCaller({
-            customer_id: userInfo.user.id,
-            name,
-            houseNumber,
-            street,
-            city,
-            state,
-            country,
-            pincode,
-            phone
-        })
+        if (apiData.length === 0) {
+            await newAddressApiCaller({
+                customer_id: userInfo.user.id,
+                name,
+                houseNumber,
+                street,
+                city,
+                state,
+                country,
+                pincode,
+                phone
+            })
+        } else {
+            await modifyAddressApiCaller({
+                customer_id: userInfo.user.id,
+                name,
+                houseNumber,
+                street,
+                city,
+                state,
+                country,
+                pincode,
+                phone
+            })
+        }
+        navigate('/profile');
     }
 
     return isLoading ? <Loading/>: <PageSetter>
@@ -219,6 +237,10 @@ const ProfilePage: React.FC<{
                     </div>
                 </div>
             </div>
+            {isNewAddressSaving && <Toast type="info" message="Saving the Address..."/>}
+            {isNewAddressSaveCauseError && <Toast type="failure" message="Saving the Address failed..."/>}
+            {isAddressUpdating && <Toast type="info" message="Updating the Address..."/>}
+            {isAddressUpdatingCauseError && <Toast type="failure" message="Updating the Address failed..."/>}
         </div>
     </PageSetter>
 }

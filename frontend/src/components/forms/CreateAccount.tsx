@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Input from '../ui/Input';
 import Button from '../ui/Button';
@@ -7,9 +8,9 @@ import Toast from '../ui/Toast';
 import styles from '../../styles/form.module.css';
 import useApi from '../../hooks/useApi';
 
-const CreateAccount: React.FC<{
-    setIsLoggedIn: () => void;
-}> = () => {
+const CreateAccount: React.FC = () => {
+    const navigate = useNavigate();
+
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const confirmPasswordRef = useRef<HTMLInputElement>(null);
@@ -19,12 +20,13 @@ const CreateAccount: React.FC<{
     const [success, setSuccess] = useState<boolean>(false);
     const [validationError, setValidationError] = useState<string | null>(null);
 
-    const [postData, apiData, isLoading, error] = useApi(`${import.meta.env.VITE_APP_API_URL}/auth/create-account`, 'POST', '');
+    const [postData, apiData, isLoading, error] = useApi(`http://localhost:5000/auth/create`, 'POST', '');
 
     useEffect(() => {
         if (apiData) {
             setSuccess(true);
             setValidationError(null);
+            navigate('/');
             emailRef.current!.value = '';
             passwordRef.current!.value = '';
             confirmPasswordRef.current!.value = '';
@@ -117,9 +119,6 @@ const CreateAccount: React.FC<{
                 />
                 <p className={styles.formText}>
                     Already have an account? <Link to="/">Login</Link>  
-                </p>
-                <p className={styles.formText}>
-                    Forgot your password? <Link to="/forgot-password">Reset Password</Link>
                 </p>
             </form>
             {success && <Toast message="Sign in successful!" type="success" />}

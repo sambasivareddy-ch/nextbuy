@@ -17,6 +17,15 @@ Content-Type: application/json
 
 {
     "email": "sambachinta.24@gmail.com",
+    "password": "abcdef-1234-ghijklm"
+}
+
+###
+POST http://localhost:5000/auth/login 
+Content-Type: application/json
+
+{
+    "email": "sambasivareddychinta@gmail.com",
     "password": "abcdef-1234-ghijk"
 }
 

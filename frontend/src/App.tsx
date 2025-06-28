@@ -18,6 +18,7 @@ import PageNotFound from './pages/PageNotFound';
 
 import Login from './components/forms/Login';
 import CreateAccount from './components/forms/CreateAccount';
+import ResetPassword from './components/forms/ResetPassword';
 
 import { RootState } from './store/store';
 
@@ -49,8 +50,9 @@ function App() {
         {isLoggedIn && <Route path="/favorite" element={<WishlistPage />} />}
         {isLoggedIn && <Route path="/profile" element={<ProfilePage user={userInfo.user}/>} />}
         {isLoggedIn && <Route index element={<Home />} />}
-        {!isLoggedIn && <Route index element={<Login setIsLoggedIn={() => { setIsLoggedIn(true) }} />} />}
-        {!isLoggedIn && <Route path="/create-account" element={<CreateAccount setIsLoggedIn={() => { setIsLoggedIn(true) }} />} />}
+        {!isLoggedIn && <Route index element={<Login/>} />}
+        {!isLoggedIn && <Route path="/create-account" element={<CreateAccount/>} />}
+        {!isLoggedIn && <Route path="/forget-password" element={<ResetPassword/>} />}
         <Route path="*" element={<PageNotFound/>} />
       </Routes>
       <Analytics />
