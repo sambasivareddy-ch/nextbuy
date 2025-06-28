@@ -90,7 +90,7 @@ const ProductPage: React.FC = () => {
                                     Object.entries(response[0].specification).map(([key, value]) => (
                                         <li key={Math.random()}>
                                             <b>{key}: </b>
-                                            <span>{value}</span>
+                                            <span>{value as string}</span>
                                         </li>
                                     ))
                                 }

@@ -46,7 +46,7 @@ const ProfilePage: React.FC<{
         fetchAddress();
     }, [userInfo]);
 
-    const [addressUpdateCaller, addressDataInfo, addressUpdateLoading, addressUpdateError] = useApi('http://localhost:5000/user/address', "POST", userInfo?.token);
+    const [addressUpdateCaller, _, __, ___] = useApi('http://localhost:5000/user/address', "POST", userInfo?.token);
 
     const addressUpdateHandler = async (e: FormEvent) => {
         e.preventDefault();
