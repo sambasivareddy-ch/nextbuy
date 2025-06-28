@@ -4,7 +4,7 @@ import Customer from '../../models/customer.js';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/create', async (req, res) => {
     const newUser = req.body;
 
     let hashedPassword;

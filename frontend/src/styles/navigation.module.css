@@ -20,6 +20,7 @@
 .page-top_header__nav, 
 .page-top_header_shop-nav {
     display: flex;
+    align-items: center;
     gap: 0 25px;
 }
 
@@ -75,6 +76,14 @@
     background-color: var(--gray-light);
     padding: 10px;
     border-radius: 10px;
+}
+
+.logout-btn {
+    outline: none;
+    border: none;
+    width: fit-content;
+    height: fit-content;
+    background: none;
 }
 
 @media screen and (max-width: 800px) {

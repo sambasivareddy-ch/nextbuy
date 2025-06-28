@@ -1,21 +1,23 @@
-import React, { useRef, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import PageSetter from "../components/product-ui/PageSetter";
 import PageNavigation from "../components/product-ui/PageNavigation";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
+import Loading from "../components/ui/Loading";
 import styles from "../styles/profile.module.css";
 
-import { AddressInfo } from '../types/types';
+import { UserInfo } from '../types/types';
+import { RootState } from "../store/store";
+import useFetch from "../hooks/useFetch";
+import useApi from "../hooks/useApi";
 
 const ProfilePage: React.FC<{
-    userName: string,
-    emailAddress: string,
-    phoneNumber: string,
-    password: string,
-    address: AddressInfo | null,
+    user: UserInfo | null, 
 }> = (props) => {
+    const userInfo: any = useSelector<RootState>((state) => state.user);
     const location = useLocation();
 
     const userNameRef = useRef<HTMLInputElement>(null);
@@ -35,7 +37,43 @@ const ProfilePage: React.FC<{
 
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
-    return <PageSetter>
+    const [apiCaller, apiData, isLoading] = useFetch();
+    useEffect(() => {
+        const fetchAddress = async () => {
+            await apiCaller(`http://localhost:5000/user/address/${userInfo.user.id}`, userInfo?.token);
+        }
+
+        fetchAddress();
+    }, [userInfo]);
+
+    const [addressUpdateCaller, addressDataInfo, addressUpdateLoading, addressUpdateError] = useApi('http://localhost:5000/user/address', "POST", userInfo?.token);
+
+    const addressUpdateHandler = async (e: FormEvent) => {
+        e.preventDefault();
+
+        const name = nameRef.current?.value;
+        const houseNumber = houseNumberRef.current?.value;
+        const street = streetRef.current?.value;
+        const city = cityRef.current?.value;
+        const state = stateRef.current?.value;
+        const country = countryRef.current?.value;
+        const pincode = pincodeRef.current?.value;
+        const phone = phoneRef.current?.value;
+
+        await addressUpdateCaller({
+            customer_id: userInfo.user.id,
+            name,
+            houseNumber,
+            street,
+            city,
+            state,
+            country,
+            pincode,
+            phone
+        })
+    }
+
+    return isLoading ? <Loading/>: <PageSetter>
         <div className={styles['main-page_wrapper']}>
             <div className={styles['page']}>
                 <PageNavigation location={location}/>
@@ -44,7 +82,7 @@ const ProfilePage: React.FC<{
                         <h1>Profile</h1>
                         <Button 
                             type="button"
-                            button_text="Edit"
+                            button_text={!isEditMode ? "Edit": "Cancel"}
                             class_name={styles['edit-btn']}
                             clickHandler={() => {
                                 setIsEditMode(!isEditMode)
@@ -61,7 +99,7 @@ const ProfilePage: React.FC<{
                                 inputRef={userNameRef}
                                 name="user-name"
                                 readOnly={!isEditMode}
-                                value={isEditMode ? undefined: props.userName}
+                                value={isEditMode ? undefined: props.user?.name}
                             />
                             <Input 
                                 type="email"
@@ -70,7 +108,7 @@ const ProfilePage: React.FC<{
                                 inputRef={emailAddressRef}
                                 name="email-address"
                                 readOnly={!isEditMode}
-                                value={isEditMode ? undefined: props.emailAddress}
+                                value={isEditMode ? undefined: props.user?.email}
                             />
                             <Input 
                                 type="password"
@@ -79,7 +117,7 @@ const ProfilePage: React.FC<{
                                 inputRef={passswordRef}
                                 name="password"
                                 readOnly={!isEditMode}
-                                value={isEditMode ? undefined: props.password}
+                                value={isEditMode ? undefined: 'sample'}
                             />
                             <Input 
                                 type="text"
@@ -88,7 +126,7 @@ const ProfilePage: React.FC<{
                                 inputRef={phoneNumberRef}
                                 name="phone-number"
                                 readOnly={!isEditMode}
-                                value={isEditMode ? undefined: props.phoneNumber}
+                                value={isEditMode ? undefined: props.user?.phone}
                             />
                             {isEditMode && <Button
                                 type="submit"
@@ -99,7 +137,7 @@ const ProfilePage: React.FC<{
                     </div>
                     <div className={styles['profile-info_address__wrapper']}>
                         <h2>Address</h2>
-                        <form className={styles['address_form']}>
+                        <form className={styles['address_form']} onSubmit={addressUpdateHandler}>
                             <Input
                                 type="text"
                                 placeholder="Name"
@@ -107,16 +145,16 @@ const ProfilePage: React.FC<{
                                 inputRef={nameRef}
                                 name="name"
                                 readOnly={!isEditMode}
-                                value={isEditMode? undefined: props.address?.name}
+                                value={apiData.length === 0 || isEditMode? undefined: apiData[0].name}
                             />
                             <Input
-                                type="number"
+                                type="text"
                                 placeholder="House Number"
                                 required={true}
                                 inputRef={houseNumberRef}
                                 name="house-number"
                                 readOnly={!isEditMode}
-                                value={isEditMode? undefined: props.address?.house_number}
+                                value={apiData.length === 0 || isEditMode? undefined: apiData[0].houseNumber}
                             />
                             <Input
                                 type="text"
@@ -125,7 +163,7 @@ const ProfilePage: React.FC<{
                                 inputRef={streetRef}
                                 name="street"
                                 readOnly={!isEditMode}
-                                value={isEditMode? undefined: props.address?.street}
+                                value={apiData.length === 0 || isEditMode? undefined: apiData[0].street}
                             />
                             <Input
                                 type="text"
@@ -134,7 +172,7 @@ const ProfilePage: React.FC<{
                                 inputRef={cityRef}
                                 name="city"
                                 readOnly={!isEditMode}
-                                value={isEditMode? undefined: props.address?.city}
+                                value={apiData.length === 0 || isEditMode? undefined: apiData[0].city}
                             />
                             <Input
                                 type="text"
@@ -143,7 +181,7 @@ const ProfilePage: React.FC<{
                                 inputRef={stateRef}
                                 name="state"
                                 readOnly={!isEditMode}
-                                value={isEditMode? undefined: props.address?.state}
+                                value={apiData.length === 0 || isEditMode? undefined: apiData[0]?.state}
                             />
                             <Input
                                 type="text"
@@ -152,7 +190,7 @@ const ProfilePage: React.FC<{
                                 inputRef={countryRef}
                                 name="country"
                                 readOnly={!isEditMode}
-                                value={isEditMode? undefined: props.address?.country}
+                                value={apiData.length === 0 || isEditMode? undefined: apiData[0]?.country}
                             />
                             <Input
                                 type="number"
@@ -161,7 +199,7 @@ const ProfilePage: React.FC<{
                                 inputRef={pincodeRef}
                                 name="pincode"
                                 readOnly={!isEditMode}
-                                value={isEditMode? undefined: props.address?.pincode}
+                                value={apiData.length === 0 || isEditMode? undefined: apiData[0]?.pincode}
                             />
                             <Input
                                 type="text"
@@ -170,7 +208,7 @@ const ProfilePage: React.FC<{
                                 inputRef={phoneRef}
                                 name="phone-number"
                                 readOnly={!isEditMode}
-                                value={isEditMode? undefined: props.address?.phone}
+                                value={apiData.length === 0 || isEditMode? undefined: apiData[0]?.phone}
                             />
                             {isEditMode && <Button
                                 type="submit"

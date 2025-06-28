@@ -1,11 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { UserInfo } from '../types/types';
+
 interface UserState {
-    user: {
-        name: string;
-        email: string;
-        phone: string;
-    } | null;
+    user: UserInfo | null;
     isAuthenticated: boolean;
     token: string | null;
 }

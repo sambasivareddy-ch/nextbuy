@@ -1,34 +1,21 @@
 import express from 'express';
 
-import Address from '../../models/address';
+import Address from '../../models/address.js';
 
 const router = express.Router();
 
-router.route('/address')
-    .get(async (req, res) => {
-        const { customer_id } = req.body;
-        
-        try {
-            const address = await Address.find({ customer_id });
+router.get('/address/:id', async (req, res) => {
+    const { id } = req.params;
+    
+    try {
+        const address = await Address.find({ customer_id: id });
 
-            res.status(200).json(address);
-        } catch(err) {
-            res.status(500).json({
-                error: "Failed to fetch the address"
-            })
-        }
-    })
-    .post(async (req, res) => {
-        const addressData = req.body;
+        res.status(200).json(address);
+    } catch(err) {
+        res.status(500).json({
+            error: "Failed to fetch the address"
+        })
+    }
+})
 
-        try {
-            const newAddress = new Address(addressData);
-            await newAddress.save();
-
-            res.status(201).json(newAddress);
-        } catch(err) {
-            res.status(500).json({
-                error: "Failed to add the address"
-            })
-        }
-    })
+export default router;

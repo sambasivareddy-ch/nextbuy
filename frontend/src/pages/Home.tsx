@@ -9,10 +9,10 @@ import PageSetter from "../components/product-ui/PageSetter";
 import useFetch from "../hooks/useFetch";
 
 const Home: React.FC = () => {
-    const [fetchPhones, phones] = useFetch('https://67f4e26e913986b16fa22fb4.mockapi.io/api/v1/phone');
+    const [fetchPhones, phones] = useFetch();
 
     useEffect(() => {
-        fetchPhones();
+        fetchPhones('https://67f4e26e913986b16fa22fb4.mockapi.io/api/v1/phone', '');
     }, [])
 
     return (

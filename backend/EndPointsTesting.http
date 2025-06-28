@@ -1,1 +1,43 @@
-GET https://didactic-space-train-x5p4q5g9rvv3v5v6-5000.app.github.dev/hello
+GET http://localhost:5000/hello
+
+###
+POST http://localhost:5000/auth/create 
+Content-Type: application/json
+
+{
+    "email": "sambachinta.24@gmail.com",
+    "password": "abcdef-1234-ghijk",
+    "phone": "+917337375243",
+    "name": "Samba Siva Reddy"
+}
+
+###
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email": "sambachinta.24@gmail.com",
+    "password": "abcdef-1234-ghijk"
+}
+
+###
+GET http://localhost:5000/user/address/685f9152199befab73422832
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODVmOTE1MjE5OWJlZmFiNzM0MjI4MzIiLCJpYXQiOjE3NTExMDI1NzQsImV4cCI6MTc1MTEwNjE3NH0.KHhozXO20X5Ivccciqrfn0ZBxaI04UKSUjvpmPazAus
+
+###
+POST http://localhost:5000/user/address 
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODVmOTE1MjE5OWJlZmFiNzM0MjI4MzIiLCJpYXQiOjE3NTExMDQ0MzMsImV4cCI6MTc1MTEyNjAzM30.05zVsI9DHGP-pqmUs8DroqaDZo7VTZh-rbc_MpuPu9k
+
+{
+    "customer_id": "685f9152199befab73422832",
+    "name": "Samba Chinta",
+    "houseNumber": "1/69",
+    "street": "Durga Agraharam",
+    "city": "Vijayawada",
+    "state": "Andhra Pradesh",
+    "country": "India",
+    "pincode": 520002,
+    "phone": "+917337375243"
+}

@@ -1,16 +1,18 @@
 import { useState } from "react";
 
-import { GadgetProductDetails } from "../types/types";
-
-const useFetch =  (uri: string): [() => Promise<void>, GadgetProductDetails[] | undefined | null, boolean] => {
-    const [apiData, setApiData] = useState<GadgetProductDetails[] | null>()
+const useFetch =  (): [(url: string, token: string) => Promise<void>, any | undefined | null, boolean] => {
+    const [apiData, setApiData] = useState([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const fetchApi = async () => {
+    const fetchApi = async (url: string, token: string) => {
         try {
             setIsLoading(true);
-            const response = await fetch(`${uri}`, {
-                method: "GET"
+            const response = await fetch(`${url}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": token,
+                }
             })
     
             if (!response.ok) {

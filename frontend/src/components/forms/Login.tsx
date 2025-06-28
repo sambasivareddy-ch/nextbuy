@@ -1,27 +1,42 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Toast from '../ui/Toast';
 import styles from '../../styles/form.module.css';
 import useApi from '../../hooks/useApi';
+import { setUser } from '../../store/userSlice';
 
 const Login: React.FC<{
     setIsLoggedIn: () => void;
 }> = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
+    const dispatcher = useDispatch();
+    const navigate = useNavigate();
 
     const [success, setSuccess] = useState<boolean>(false);
     const [validationError, setValidationError] = useState<string | null>(null);
 
-    const [postData, apiData, isLoading, error] = useApi(`${import.meta.env.VITE_APP_API_URL}/auth/login`, 'POST');
+    const [apiCaller, apiData, isLoading, error] = useApi(`http://localhost:5000/auth/login`, 'POST', '');
 
     useEffect(() => {
         if (apiData) {
             setSuccess(true);
             setValidationError(null);
+            dispatcher(setUser({
+                user: {
+                    id: apiData.customer?.id,
+                    email: apiData.customer?.email,
+                    name: apiData.customer?.name,
+                    phone: apiData.customer?.phone,
+                },
+                token: apiData.token
+            }))
+            navigate('/');
             emailRef.current!.value = '';
             passwordRef.current!.value = '';
         } else if (error) {
@@ -49,7 +64,7 @@ const Login: React.FC<{
             return;
         }
 
-        await postData({
+        await apiCaller({
             email,
             password,
         });

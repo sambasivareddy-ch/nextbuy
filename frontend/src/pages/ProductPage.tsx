@@ -24,10 +24,10 @@ const ProductPage: React.FC = () => {
     const [isAddedToCart, setIsAddedToCart] = useState(false);
     const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
 
-    const [fetchApi, response, isLoading] = useFetch(`https://67f4e26e913986b16fa22fb4.mockapi.io/api/v1/${params?.category}?productId=${params?.id}`)
+    const [fetchApi, response, isLoading] = useFetch()
 
     useEffect(() => {
-        fetchApi()
+        fetchApi(`https://67f4e26e913986b16fa22fb4.mockapi.io/api/v1/${params?.category}?productId=${params?.id}`, '');
     }, [])
 
     useEffect(() => {

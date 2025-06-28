@@ -8,7 +8,7 @@ const AddressSchema = mongoose.Schema({
         ref: "customer"
     },
     name: stringType,
-    houseNumber: numberType,
+    houseNumber: stringType,
     street: stringType,
     city: stringType,
     state: stringType,

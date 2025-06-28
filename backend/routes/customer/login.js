@@ -6,7 +6,7 @@ import Customer from '../../models/customer.js';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
             const matched = await bcrypt.compare(password, customer.password);
 
             if (matched) {
-                const token = jwt.sign({ userId: customer._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                const token = jwt.sign({ userId: customer._id }, process.env.JWT_SECRET, { expiresIn: '6h' });
 
                 res.status(200).json({
                     success: true,
@@ -27,7 +27,6 @@ router.post('/', async (req, res) => {
                         name: customer.name,
                         email: customer.email,
                         phone: customer.phone,
-                        password: customer.password,
                     }
                 })
             } else {

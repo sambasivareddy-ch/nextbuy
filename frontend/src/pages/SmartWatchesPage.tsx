@@ -7,10 +7,10 @@ import useFetch from "../hooks/useFetch";
 
 const SmartWatchesPage: React.FC = () => {
     const location = useLocation();
-    const [fetchApi, data, isLoading] = useFetch('https://67f4e26e913986b16fa22fb4.mockapi.io/api/v1/smartwatch')
+    const [fetchApi, data, isLoading] = useFetch()
 
     useEffect(() => {
-        fetchApi()
+        fetchApi('https://67f4e26e913986b16fa22fb4.mockapi.io/api/v1/smartwatch', '');
     }, [])
 
     return (

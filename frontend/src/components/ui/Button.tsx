@@ -6,7 +6,7 @@ type ButtonType = "button" | "submit" | "reset";
 
 const Button: React.FC<{ 
     type: ButtonType,
-    button_text: string, 
+    button_text: string | ReactNode, 
     class_name?: string, 
     clickHandler?: (v: any) => void,  
     val?: number,

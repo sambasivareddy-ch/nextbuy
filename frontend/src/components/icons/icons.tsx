@@ -17,6 +17,7 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export const CartIcon: React.FC<{}> = () => {
     return <ShoppingCartIcon/>
@@ -84,4 +85,8 @@ export const KeyArrowDown: React.FC<{}> = () => {
 
 export const KeyArrowUp: React.FC<{}> = () => {
     return <KeyboardArrowUpIcon/>
+}
+
+export const LogoutBtnIcon: React.FC<{}> = () => {
+    return <LogoutIcon/>
 }

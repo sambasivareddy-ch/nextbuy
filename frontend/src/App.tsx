@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import './App.css'
 import Home from './pages/Home'
@@ -18,17 +19,19 @@ import PageNotFound from './pages/PageNotFound';
 import Login from './components/forms/Login';
 import CreateAccount from './components/forms/CreateAccount';
 
+import { RootState } from './store/store';
+
 import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const userInfo: any = useSelector<RootState>((state) => state.user)
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
+    if (userInfo.isAuthenticated) {
       setIsLoggedIn(true);
     } else {
-      setIsLoggedIn(true); // For testing purposes, set to true to bypass login
+      setIsLoggedIn(false); // For testing purposes, set to true to bypass login
     }
   })
 
@@ -44,7 +47,7 @@ function App() {
         {isLoggedIn && <Route path="/cart" element={<CartPage />} />}
         {isLoggedIn && <Route path="/checkout" element={<CheckoutPage />} />}
         {isLoggedIn && <Route path="/favorite" element={<WishlistPage />} />}
-        {isLoggedIn && <Route path="/profile" element={<ProfilePage userName='Samba Siva Reddy' emailAddress='sambachinta.24@gmail.com' phoneNumber='7337375243' password='samba@123' address={null}/>} />}
+        {isLoggedIn && <Route path="/profile" element={<ProfilePage user={userInfo.user}/>} />}
         {isLoggedIn && <Route index element={<Home />} />}
         {!isLoggedIn && <Route index element={<Login setIsLoggedIn={() => { setIsLoggedIn(true) }} />} />}
         {!isLoggedIn && <Route path="/create-account" element={<CreateAccount setIsLoggedIn={() => { setIsLoggedIn(true) }} />} />}
