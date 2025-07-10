@@ -71,6 +71,9 @@ const Login: React.FC = () => {
     return (
         <div className={styles.formContainer} onSubmit={formSubmitHandler}>
             <form className={styles.form}>
+                <p className={styles.homeText}>
+                    <Link to="/">Go back to Catalog</Link>
+                </p>
                 <h2 className={styles.formTitle}>Login</h2>
                 <Input
                     type="email"

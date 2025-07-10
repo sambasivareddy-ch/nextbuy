@@ -80,7 +80,7 @@ const ResetPassword: React.FC = () => {
                     button_text='Update Password'
                 />
                 <p className={styles.formText}>
-                    Remembered Password? <Link to="/">Login into Account</Link>
+                    Remembered Password? <Link to="/login">Login into Account</Link>
                 </p>
             </form>
             {success && <Toast message="Updated password successful!" type="success" />}

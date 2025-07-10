@@ -118,7 +118,7 @@ const CreateAccount: React.FC = () => {
                     button_text='Create Account'
                 />
                 <p className={styles.formText}>
-                    Already have an account? <Link to="/">Login</Link>  
+                    Already have an account? <Link to="/login">Login</Link>  
                 </p>
             </form>
             {success && <Toast message="Sign in successful!" type="success" />}

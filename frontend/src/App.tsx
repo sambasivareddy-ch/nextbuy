@@ -49,10 +49,10 @@ function App() {
         {isLoggedIn && <Route path="/checkout" element={<CheckoutPage />} />}
         {isLoggedIn && <Route path="/favorite" element={<WishlistPage />} />}
         {isLoggedIn && <Route path="/profile" element={<ProfilePage user={userInfo.user}/>} />}
-        {isLoggedIn && <Route index element={<Home />} />}
-        {!isLoggedIn && <Route index element={<Login/>} />}
+        {!isLoggedIn && <Route path="/login" element={<Login/>} />}
         {!isLoggedIn && <Route path="/create-account" element={<CreateAccount/>} />}
         {!isLoggedIn && <Route path="/forget-password" element={<ResetPassword/>} />}
+        <Route index element={<Home />} />
         <Route path="*" element={<PageNotFound/>} />
       </Routes>
       <Analytics />
