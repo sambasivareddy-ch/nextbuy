@@ -18,9 +18,16 @@ router.put('/reset-password', async (req, res) => {
 
     try {
         const updatedUser = await Customer.findOneAndUpdate(
-            { _id: user.id },
-            user
+            { email : user.email },
+            { $set: { password: hashedPassword } }
         )
+
+        if (!updatedUser) {
+            res.status(404).json({
+                success: false, 
+                message: "User not found",
+            })
+        }
 
         res.status(201).json({
             success: true,
