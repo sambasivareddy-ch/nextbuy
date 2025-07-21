@@ -25,13 +25,12 @@
     gap: 10px;
 }
 
-.add-product_form__wrapper input:nth-child(5),
 .add-product_form__wrapper textarea,
 .add-product_form__wrapper button {
     grid-column: span 2;
 }
 
-.add-product_form__wrapper input {
+.add-product_form__wrapper input, select {
     padding: 15px;
     font-size: 16px;
     border-radius: 5px;

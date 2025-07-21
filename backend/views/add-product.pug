@@ -8,12 +8,20 @@ html(lang="en")
     body 
         .add-product_wrapper 
             .add-product_main 
+                p Welcome, #{admin.email}
                 h2 Add Product 
-                form.add-product_form__wrapper(method="POST", action="/add-product")
+                form.add-product_form__wrapper(method="POST", action="/admin/add-product")
                     input(type="text", name="product", placeholder="Product Name")
                     input(type="text", name="brand", placeholder="Product Brand")
-                    input(type="text", name="category", placeholder="Product Category")
+                    select#category(name="category")
+                        option(value="") Select Category 
+                        option(value="phone") Phone 
+                        option(value="watches") Watches 
+                        option(value="computer") Computer 
+                        option(value="head-phones") Head Phones 
+                        option(value="gaming") Gaming      
                     input(type="number", name="price", placeholder="Product Price")
                     input(type="text", name="image", placeholder="Product Image URL")
+                    input(type="number", name="stock", placeholder="Available Quantity")
                     textarea(name="description", cols="30", rows="10")
                     button.submit(type="submit") Submit 

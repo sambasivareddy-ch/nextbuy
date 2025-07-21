@@ -2,6 +2,7 @@ import express from "express";
 import { config } from "dotenv";
 import bodyParser from "body-parser";
 import cors from 'cors';
+import session from 'express-session';
 
 import ConnectToDB from "./utils/connect.js";
 import createCustomerRoute from "./routes/customer/auth/create.js";
@@ -23,6 +24,13 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'pug');
+
+app.use(session({
+    secret: process.env.JWT_SECRET, 
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}));
 
 // Base route
 app.get('/hello', (req, res) => {

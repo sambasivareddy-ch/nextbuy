@@ -18,6 +18,10 @@ router.route('/')
             const matched = await bcrypt.compare(password, admin.password);
 
             if (matched) {
+                req.session.admin = {
+                    id: admin._id,
+                    email: admin.email
+                }
                 res.redirect('/admin/add-product')
             } else {
                 res.status(401).json({

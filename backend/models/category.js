@@ -2,10 +2,9 @@ import mongoose from "mongoose";
 import { stringType } from "./type.js";
 
 const CategorySchema = mongoose.Schema({
-    name: stringType,
-    product_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "product",
+    name: {
+        ...stringType,
+        unique: true,
     }
 }, {
     collection: "category",
