@@ -12,6 +12,11 @@ export type GadgetRatings = {
     count: number,
 }
 
+export type Category = {
+    id: string, 
+    name: string,
+}
+
 export type GadgetProductDetails = {
     brand: string,
     model: string,
@@ -19,7 +24,8 @@ export type GadgetProductDetails = {
     specification: GadgetSpecifatications,
     ratings: GadgetRatings,
     image: string,
-    productId: string,
+    _id: string,
+    category: Category
 }
 
 export type PageSegmentsInfo = {

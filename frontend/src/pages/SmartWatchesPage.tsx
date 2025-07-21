@@ -10,14 +10,14 @@ const SmartWatchesPage: React.FC = () => {
     const [fetchApi, data, isLoading] = useFetch()
 
     useEffect(() => {
-        fetchApi('https://67f4e26e913986b16fa22fb4.mockapi.io/api/v1/smartwatch', '');
+        fetchApi('http://localhost:5000/category/watches', '');
     }, [])
 
     return (
         <PageTemplate 
             pagePath="smartwatch" 
             location={location} 
-            productsData={data} 
+            productsData={data.products} 
             isLoading={isLoading}
         />
     )

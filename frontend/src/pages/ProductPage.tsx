@@ -8,7 +8,7 @@ import PageNavigation from "../components/product-ui/PageNavigation";
 import Loading from "../components/ui/Loading";
 import { AddToWishlistBtn, AddToCartlistBtn } from "../components/ui/Button";
 import Toast from "../components/ui/Toast";
-import StarRating from "../components/product-ui/StarRating";
+// import StarRating from "../components/product-ui/StarRating";
 import { ShippingIcon, InHouseIcon, GuaranteeIcon } from "../components/icons/icons";
 
 import useFetch from "../hooks/useFetch";
@@ -27,7 +27,7 @@ const ProductPage: React.FC = () => {
     const [fetchApi, response, isLoading] = useFetch()
 
     useEffect(() => {
-        fetchApi(`https://67f4e26e913986b16fa22fb4.mockapi.io/api/v1/${params?.category}?productId=${params?.id}`, '');
+        fetchApi(`http://localhost:5000/product/${params?.id}`, '');
     }, [])
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const ProductPage: React.FC = () => {
     const addToCartClickHandler = () => {
         if (response) {
             dispatch(addToCart({
-                product: response[0],
+                product: response.product,
             }))
             setIsAddedToCart(true);
         }
@@ -54,27 +54,27 @@ const ProductPage: React.FC = () => {
     const addToWishlistClickHandler = () => {
         if (response) {
             dispatch(addToWishlist({
-                product: response[0],
+                product: response.product,
             }))
             setIsAddedToWishlist(true);
         }
     }
 
     return isLoading? <Loading/> : (
-        response && response[0] && 
+        response && response.product && 
         <PageSetter>
             <div className={styles['main-page_wrapper']}>
                 <div className={styles['page']}>
                     <PageNavigation location={location}/>
                     <div className={styles['product-details_wrapper']}>
                         <div className={styles['product-images']}>
-                            <img src={response[0]?.image} alt="product image"/>
+                            <img src={response.product.image} alt="product image"/>
                         </div>
                         <div className={styles['product-details']}>
                             <div className={styles['product-basic_details']}>
-                                <h1>{response[0]?.brand} {response[0]?.model}</h1>
-                                <h2>&#36;{response[0]?.price}</h2>
-                               <StarRating rating={response[0]?.ratings.average} count={response[0]?.ratings.count}/>
+                                <h1>{response.product.brand} {response.product.model}</h1>
+                                <h2>&#36;{response.product.price}</h2>
+                               {/* <StarRating rating={response.product?.ratings.average} count={response.product?.ratings.count}/> */}
                             </div>
                             <div className={styles['product-colors']}>
                                 <p>Choose Colors: </p>
@@ -86,8 +86,8 @@ const ProductPage: React.FC = () => {
                             </div>
                             <ol className={styles['product-specifications']}>
                                 <h3>Specifications</h3>
-                                {response[0]?.specification && 
-                                    Object.entries(response[0].specification).map(([key, value]) => (
+                                {response.product.description && 
+                                    Object.entries(JSON.parse(response.product.description)).map(([key, value]) => (
                                         <li key={Math.random()}>
                                             <b>{key}: </b>
                                             <span>{value as string}</span>

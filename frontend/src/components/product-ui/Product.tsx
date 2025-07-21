@@ -7,7 +7,7 @@ import { GadgetProductDetails } from "../../types/types";
 import styles from "../../styles/product.module.css";
 
 const Product: React.FC<{productDetails: GadgetProductDetails, product_category?: string}> = (props) => {
-    const thisProductPath = `/${props.product_category}/${props.productDetails.productId}`
+    const thisProductPath = `/${props.product_category}/${props.productDetails._id}`
 
     return (
         <div className={styles['product-main_wrapper']}>

@@ -177,7 +177,7 @@ const PageTemplate: React.FC<{location: Location<any>, productsData?: GadgetProd
                                             <Product
                                                 productDetails={product}
                                                 key={Math.random()} 
-                                                product_category={props.pagePath}
+                                                product_category={product.category.name}
                                             />
                                         ))
                                     }
