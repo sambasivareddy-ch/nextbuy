@@ -1,5 +1,4 @@
 import { Router } from "express";
-import mongoose from "mongoose";
 
 import Category from "../../models/category.js";
 import Product from "../../models/product.js";

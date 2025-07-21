@@ -15,6 +15,7 @@ import adminLoginFormRoute from "./routes/admin/admin-login.js";
 import verifyToken from "./middleware/verifyUser.js";
 
 import getProductsBasedOnCategory from "./routes/customer/get-products-on-category.js";
+import getProductWithId from './routes/customer/get-product.js';
 
 // Express Application
 const app = express()
@@ -47,6 +48,7 @@ app.use(adminLoginFormRoute);
 app.use('/user', verifyToken, addressRoute);
 app.use('/user', verifyToken, modifyAddressRoute);
 app.use('/category/:categoryName', getProductsBasedOnCategory);
+app.use('/product/:id', getProductWithId);
 
 // Listening at configured port
 const APP_PORT = process.env.PORT || 5001;
