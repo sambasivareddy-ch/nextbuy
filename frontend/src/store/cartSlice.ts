@@ -25,17 +25,17 @@ const cartSlice = createSlice({
     reducers: {
         addToCart: (state, action) => {
             const product: GadgetProductDetails = action.payload.product;
-            const existingProduct = state.products[product.productId]
+            const existingProduct = state.products[product._id]
 
             if (existingProduct) {
                 existingProduct.count += 1;
                 state.totalPrice += existingProduct.product.price;
             } else {
-                state.products[product.productId] = {
+                state.products[product._id] = {
                     product,
                     count: 1,
                 }
-                state.totalPrice += state.products[product.productId].product.price
+                state.totalPrice += state.products[product._id].product.price
             }
             state.totalProducts += 1;
         },

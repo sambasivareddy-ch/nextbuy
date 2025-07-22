@@ -25,7 +25,7 @@ const CartProduct: React.FC<{
 
     const buttonClickHandler = () => {
         dispatch(removeFromCart({
-            productId: props.productDetails.productId,
+            productId: props.productDetails._id,
         }))
         props.removeFromCartHandler?.()
     }
@@ -35,21 +35,21 @@ const CartProduct: React.FC<{
             product: props.productDetails,
         }))
         dispatch(removeFromWishlist({
-            productId: props.productDetails.productId,
+            productId: props.productDetails._id,
         }))
         props.addToCartHandler?.()
     }
 
     const removeProductFromWishlistHandler = () => {
         dispatch(removeFromWishlist({
-            productId: props.productDetails.productId,
+            productId: props.productDetails._id,
         }))
         props.removeFromWishlistHandler?.()
     }
 
     const productCountChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
         dispatch(increaseTheSelectedProductToGivenCount({
-            productId: props.productDetails.productId,
+            productId: props.productDetails._id,
             count: parseInt(e.target.value),
         }))
         setProductCount(parseInt(e.target.value))

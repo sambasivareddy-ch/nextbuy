@@ -22,10 +22,10 @@ const wishlistSlice = createSlice({
     reducers: {
         addToWishlist: (state, action) => {
             const product: GadgetProductDetails = action.payload.product;
-            const existingProduct = state.products[product.productId]
+            const existingProduct = state.products[product._id]
 
             if (!existingProduct) {
-                state.products[product.productId] = {
+                state.products[product._id] = {
                     product,
                 }
                 state.totalProducts += 1;
