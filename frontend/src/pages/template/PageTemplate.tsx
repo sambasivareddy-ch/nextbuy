@@ -16,7 +16,7 @@ import styles from "../../styles/pages.module.css";
 
 const PageTemplate: React.FC<{location: Location<any>, productsData?: GadgetProductDetails[] | null, isLoading: boolean, pagePath: string}> = (props) => {
     const [selectedBrands, setSelectedBrands] = useState<Set<string>>(new Set());
-    const [selectedRatings, setSelectRatings] = useState<Set<string>>(new Set());
+    const [selectedRatings] = useState<Set<string>>(new Set());
     const [selectedProductsCount, setSelectedProductsCount] = useState<number>(0);
     const [minPrice, setMinPrice] = useState<number>(0);
     const [maxPrice, setMaxPrice] = useState<number>(10000);
@@ -63,15 +63,15 @@ const PageTemplate: React.FC<{location: Location<any>, productsData?: GadgetProd
         setSelectedBrands(updatedBrands);
     };
 
-    const ratingChangeHandler = (rating: string) => {
-        const updatedRatings = new Set(selectedRatings);
-        if (updatedRatings.has(rating)) {
-            updatedRatings.delete(rating);
-        } else {
-            updatedRatings.add(rating);
-        }
-        setSelectRatings(updatedRatings);
-    };
+    // const ratingChangeHandler = (rating: string) => {
+    //     const updatedRatings = new Set(selectedRatings);
+    //     if (updatedRatings.has(rating)) {
+    //         updatedRatings.delete(rating);
+    //     } else {
+    //         updatedRatings.add(rating);
+    //     }
+    //     setSelectRatings(updatedRatings);
+    // };
 
     const distinctBrands = new Set('');
 
