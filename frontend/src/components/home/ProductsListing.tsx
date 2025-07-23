@@ -52,14 +52,14 @@ const ProductsListing: React.FC<{productsData: GadgetProductDetails[] | null | u
                             product_category={"phone"}
                         />
                     })}
-                    {props.productsData && checkedRadio === 2 && props.productsData.slice(7,15).map((product) => {
+                    {props.productsData && checkedRadio === 2 && props.productsData.slice(0, 8).map((product) => {
                         return <Product 
                             productDetails={product}
                             key={Math.random()}
                             product_category={"phone"}
                         />
                     })}
-                    {props.productsData && checkedRadio === 3 && props.productsData.slice(3,11).map((product) => {
+                    {props.productsData && checkedRadio === 3 && props.productsData.slice(0,8).map((product) => {
                         return <Product 
                             productDetails={product}
                             key={Math.random()}

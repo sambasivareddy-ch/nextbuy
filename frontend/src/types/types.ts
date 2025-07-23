@@ -19,7 +19,7 @@ export type Category = {
 
 export type GadgetProductDetails = {
     brand: string,
-    model: string,
+    name: string,
     price: number,
     specification: GadgetSpecifatications,
     ratings: GadgetRatings,

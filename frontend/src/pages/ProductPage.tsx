@@ -72,7 +72,7 @@ const ProductPage: React.FC = () => {
                         </div>
                         <div className={styles['product-details']}>
                             <div className={styles['product-basic_details']}>
-                                <h1>{response.product.brand} {response.product.model}</h1>
+                                <h1>{response.product.brand} {response.product.name}</h1>
                                 <h2>&#36;{response.product.price}</h2>
                                {/* <StarRating rating={response.product?.ratings.average} count={response.product?.ratings.count}/> */}
                             </div>

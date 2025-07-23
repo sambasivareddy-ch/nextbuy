@@ -12,7 +12,7 @@ const Home: React.FC = () => {
     const [fetchPhones, phones] = useFetch();
 
     useEffect(() => {
-        fetchPhones('https://67f4e26e913986b16fa22fb4.mockapi.io/api/v1/phone', '');
+        fetchPhones('http://localhost:5000/category/phone', '');
     }, [])
 
     return (
@@ -20,7 +20,7 @@ const Home: React.FC = () => {
             <Banner/>
             {/* <SubBanner/> */}
             <Categoies/>
-            <ProductsListing productsData={phones}/>
+            <ProductsListing productsData={phones.products}/>
         </PageSetter>
     )
 }

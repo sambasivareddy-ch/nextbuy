@@ -128,7 +128,7 @@ const PageTemplate: React.FC<{location: Location<any>, productsData?: GadgetProd
                                         })
                                     )}
                                 </Filter>
-                                <Filter name="Ratings">
+                                {/* <Filter name="Ratings">
                                     {(
                                         ["1.0", "2.0", "3.0", "4.0", "5.0"].map((name) => {
                                             return <CheckBox 
@@ -140,7 +140,7 @@ const PageTemplate: React.FC<{location: Location<any>, productsData?: GadgetProd
                                             />
                                         })
                                     )}
-                                </Filter>
+                                </Filter> */}
                             </div>
                             <div className={styles['products']}>
                                 <div className={styles['pagination-wrapper']}>

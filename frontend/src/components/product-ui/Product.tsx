@@ -17,7 +17,7 @@ const Product: React.FC<{productDetails: GadgetProductDetails, product_category?
                 </div>
                 <div className={styles['product-details']}>
                     <img src={props.productDetails.image} alt="Product Image"/>
-                    <p>{props.productDetails.brand} {props.productDetails.model}</p>
+                    <p>{props.productDetails.brand} {props.productDetails.name}</p>
                     <p>&#36; {props.productDetails.price}</p>
                     <LinkButton to={thisProductPath} link_text="Show Info" class_name={styles['product-btn']}/>
                 </div>

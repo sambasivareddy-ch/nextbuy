@@ -59,7 +59,7 @@ const CartProduct: React.FC<{
         <div className={styles['cart-product_info']}>
             <img src={props.productDetails.image} alt="cart product"/>
             <div>
-                <p className={styles['brand']}>{props.productDetails.brand} {props.productDetails.model}</p>
+                <p className={styles['brand']}>{props.productDetails.brand} {props.productDetails.name}</p>
             </div>
         </div>
         <div className={styles['product-cost_info']}>
