@@ -39,21 +39,21 @@ function App() {
   return (
     <>
       <Routes>
-        {isLoggedIn && <Route path="/computers" element={<ComputersPage />} />}
-        {isLoggedIn && <Route path='/:category/:id' element={<ProductPage />} />}
-        {isLoggedIn && <Route path="/phone" element={<PhonePage />} />}
-        {isLoggedIn && <Route path="/smartwatch" element={<SmartWatchesPage />} />}
-        {isLoggedIn && <Route path="/gaming" element={<GamingPage />} />}
-        {isLoggedIn && <Route path="/head-phones" element={<HeadPhonesPage />} />}
+        <Route path="/computers" element={<ComputersPage />} />
+        <Route path='/:category/:id' element={<ProductPage />} />
+        <Route path="/phone" element={<PhonePage />} />
+        <Route path="/smartwatch" element={<SmartWatchesPage />} />
+        <Route path="/gaming" element={<GamingPage />} />
+        <Route path="/head-phones" element={<HeadPhonesPage />} />
         {isLoggedIn && <Route path="/cart" element={<CartPage />} />}
         {isLoggedIn && <Route path="/checkout" element={<CheckoutPage />} />}
         {isLoggedIn && <Route path="/favorite" element={<WishlistPage />} />}
-        {isLoggedIn && <Route path="/profile" element={<ProfilePage user={userInfo.user}/>} />}
-        {!isLoggedIn && <Route path="/login" element={<Login/>} />}
-        {!isLoggedIn && <Route path="/create-account" element={<CreateAccount/>} />}
-        {!isLoggedIn && <Route path="/forget-password" element={<ResetPassword/>} />}
+        {isLoggedIn && <Route path="/profile" element={<ProfilePage user={userInfo.user} />} />}
+        {!isLoggedIn && <Route path="/login" element={<Login />} />}
+        {!isLoggedIn && <Route path="/create-account" element={<CreateAccount />} />}
+        {!isLoggedIn && <Route path="/forget-password" element={<ResetPassword />} />}
         <Route index element={<Home />} />
-        <Route path="*" element={<PageNotFound/>} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Analytics />
     </>

@@ -7,7 +7,7 @@ import PageSetter from "../components/product-ui/PageSetter";
 import PageNavigation from "../components/product-ui/PageNavigation";
 import AddressSection from "../components/product-ui/AddressSection";
 import CartProduct from "../components/product-ui/CartProduct";
-import AddCircleIcon from '@mui/icons-material/AddCircle'; 
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
@@ -37,12 +37,16 @@ const CheckoutPage: React.FC = () => {
     const stateRef = useRef<HTMLInputElement>(null);
     const countryRef = useRef<HTMLInputElement>(null);
     const pincodeRef = useRef<HTMLInputElement>(null);
-    const phoneRef =useRef<HTMLInputElement>(null)
+    const phoneRef = useRef<HTMLInputElement>(null)
 
     const cardOwnerNameRef = useRef<HTMLInputElement>(null);
     const cardNumberRef = useRef<HTMLInputElement>(null);
     const expDataRef = useRef<HTMLInputElement>(null);
     const cvvRef = useRef<HTMLInputElement>(null);
+
+    const [cardNumberState, setCardNumberState] = useState('');
+    const [cardOwnerNameState, setCardOwnerNameState] = useState('');
+    const [expDateState, setExpDateState] = useState('');
 
     useEffect(() => {
         if (isPaymentProcessing) {
@@ -80,10 +84,10 @@ const CheckoutPage: React.FC = () => {
         setIsPaymentProcessing(true);
     }
 
-    return isPaymentProcessing? <Loading/> : <PageSetter>
+    return isPaymentProcessing ? <Loading /> : <PageSetter>
         <div className={styles['main-page_wrapper']}>
             <div className={styles['page']}>
-                <PageNavigation location={location}/>
+                <PageNavigation location={location} />
                 <h1>Checkout</h1>
                 <div className={styles['main-wrapper']}>
                     <div className={styles['summary_wrapper']}>
@@ -107,24 +111,24 @@ const CheckoutPage: React.FC = () => {
                             <div className={styles['address-main']}>
                                 <div className={styles['address-main_header']}>
                                     <h3>Address</h3>
-                                    {!showAddAddressForm && <button onClick={() => {setShowAddAddressForm(true)}}>
-                                        <AddCircleIcon/>
+                                    {!showAddAddressForm && <button onClick={() => { setShowAddAddressForm(true) }}>
+                                        <AddCircleIcon />
                                     </button>}
-                                    {showAddAddressForm && <button onClick={() => {setShowAddAddressForm(false)}}>
-                                        <RemoveIcon/>
+                                    {showAddAddressForm && <button onClick={() => { setShowAddAddressForm(false) }}>
+                                        <RemoveIcon />
                                     </button>}
                                 </div>
-                                {showAddAddressForm && 
+                                {showAddAddressForm &&
                                     <form className={styles['add-address_form']} onSubmit={addAddressFormSubmitHandler}>
-                                        <Input type="text" placeholder="Name" required={true} inputRef={nameRef}/>
-                                        <Input type="text" placeholder="House No." required={true} inputRef={houseNumberRef}/>
-                                        <Input type="text" placeholder="Street" required={true} inputRef={streetRef}/>
-                                        <Input type="text" placeholder="City" required={true} inputRef={cityRef}/>
-                                        <Input type="text" placeholder="State" required={true} inputRef={stateRef}/>
-                                        <Input type="text" placeholder="Country" required={true} inputRef={countryRef}/>
-                                        <Input type="text" placeholder="Pincode" required={true} inputRef={pincodeRef}/>
-                                        <Input type="text" placeholder="Phone Number" required={true} inputRef={phoneRef}/>
-                                        <Button type="submit" button_text="Add Address"/>
+                                        <Input type="text" placeholder="Name" required={true} inputRef={nameRef} />
+                                        <Input type="text" placeholder="House No." required={true} inputRef={houseNumberRef} />
+                                        <Input type="text" placeholder="Street" required={true} inputRef={streetRef} />
+                                        <Input type="text" placeholder="City" required={true} inputRef={cityRef} />
+                                        <Input type="text" placeholder="State" required={true} inputRef={stateRef} />
+                                        <Input type="text" placeholder="Country" required={true} inputRef={countryRef} />
+                                        <Input type="text" placeholder="Pincode" required={true} inputRef={pincodeRef} />
+                                        <Input type="text" placeholder="Phone Number" required={true} inputRef={phoneRef} />
+                                        <Button type="submit" button_text="Add Address" />
                                     </form>
                                 }
                             </div>
@@ -148,47 +152,52 @@ const CheckoutPage: React.FC = () => {
                         <h2>Payment</h2>
                         <div className={styles['credit-card_wrapper']}>
                             <div className={styles['card-header']}>
-                                <img 
+                                <img
                                     src={chip}
                                     alt="chip icon"
                                 />
-                                <img 
-                                    src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png"
-                                    alt="visa icon"
-                                />
+                                <h2>Card</h2>
                             </div>
                             <div className={styles['card-number_wrapper']}>
-                                <span className={styles['card-number']}>2787</span>
-                                <span className={styles['card-number']}>2000</span>
-                                <span className={styles['card-number']}>2410</span>
-                                <span className={styles['card-number']}>2025</span>
+                                <span className={styles['card-number']}>
+                                    {cardNumberState.substring(0, 4) + 'XXXX'.substring(0, 4 - cardNumberState.substring(0, 4).length)}
+                                </span>
+                                <span className={styles['card-number']}>
+                                    {cardNumberState.substring(4, 8) + 'XXXX'.substring(0, 4 - cardNumberState.substring(4, 8).length)}
+                                </span>
+                                <span className={styles['card-number']}>
+                                    {cardNumberState.substring(8, 12) + 'XXXX'.substring(0, 4 - cardNumberState.substring(8, 12).length)}
+                                </span>
+                                <span className={styles['card-number']}>
+                                    {cardNumberState.substring(12, 16) + 'XXXX'.substring(0, 4 - cardNumberState.substring(12, 16).length)}
+                                </span>
                             </div>
                             <div className={styles['card-owner_details']}>
                                 <div className={styles['card-owner']}>
                                     <p>Owner Name</p>
-                                    <h3>Samba Chinta</h3>
+                                    <h3>{cardOwnerNameState + 'XXXXXXXXX'.substring(0, cardOwnerNameState.length > 10 ? 0 : 10 - cardOwnerNameState.length)}</h3>
                                 </div>
-                                <p>01/30</p>
+                                <p>{expDateState || 'XXXX-XX'}</p>
                             </div>
                         </div>
                         <form className={styles['card-payment_form']} onSubmit={creditCardPaymentSubmitHandler}>
-                            <Input type="text" placeholder="Cardholder Name" required={true} inputRef={cardOwnerNameRef}/>
-                            <Input type="text" placeholder="Card Number" required={true} inputRef={cardNumberRef}/>
-                            <Input type="month" placeholder="Exp. Date" required={true} inputRef={expDataRef}/>
-                            <Input type="text" placeholder="CVV" required={true} inputRef={cvvRef}/>
-                            <Button type="submit" button_text="Make Payment"/>
+                            <Input type="text" placeholder="Cardholder Name" required={true} inputRef={cardOwnerNameRef} onChange={(e) => setCardOwnerNameState(e.target.value)} />
+                            <Input type="text" placeholder="Card Number" required={true} inputRef={cardNumberRef} onChange={(e) => setCardNumberState(e.target.value)} maxLength={16} />
+                            <Input type="month" placeholder="Exp. Date" required={true} inputRef={expDataRef} onChange={(e) => setExpDateState(e.target.value)} />
+                            <Input type="text" placeholder="CVV" required={true} inputRef={cvvRef} />
+                            <Button type="submit" button_text="Make Payment" />
                         </form>
                     </div>
                 </div>
             </div>
             {isPaymentSuccess && createPortal(
-                <Confirm 
-                    message="Hurray!! Payment successful" 
+                <Confirm
+                    message="Hurray!! Payment successful"
                     okClickHandler={() => {
                         setIsPaymentSuccess(false)
-                        window.location.href="/"
+                        window.location.href = "/"
                     }}
-                    cancelClickHandler={() => {setIsPaymentSuccess(false)}}
+                    cancelClickHandler={() => { setIsPaymentSuccess(false) }}
                 />,
                 document.getElementById("confirm")!
             )}

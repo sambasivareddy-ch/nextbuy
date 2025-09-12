@@ -12,6 +12,9 @@ const Input: React.FC<{
     name?: string,
     readOnly?: boolean,
     value?: string | number | undefined | readonly string[],
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+    maxLength?: number | undefined,
+    minLength?: number | undefined,
 }> = (props) => {
 
     return <input 
@@ -23,6 +26,9 @@ const Input: React.FC<{
         name={props.name ? props.name : undefined}
         value={props.value}
         readOnly={props.readOnly}
+        onChange={props.onChange}
+        maxLength={props.maxLength}
+        minLength={props.minLength}
     />
 }
 
