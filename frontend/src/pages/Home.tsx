@@ -12,7 +12,7 @@ const Home: React.FC = () => {
     const [fetchPhones, phones] = useFetch();
 
     useEffect(() => {
-        fetchPhones('http://localhost:5000/category/phone', '');
+        fetchPhones(`${import.meta.env.VITE_APP_SERVER_URL}/category/phone`, '');
     }, [])
 
     return (

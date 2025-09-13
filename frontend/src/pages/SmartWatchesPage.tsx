@@ -10,7 +10,7 @@ const SmartWatchesPage: React.FC = () => {
     const [fetchApi, data, isLoading] = useFetch()
 
     useEffect(() => {
-        fetchApi('http://localhost:5000/category/watches', '');
+        fetchApi(`${import.meta.env.VITE_APP_SERVER_URL}/category/watches`, '');
     }, [])
 
     return (

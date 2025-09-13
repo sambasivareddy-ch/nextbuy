@@ -20,7 +20,7 @@ const CreateAccount: React.FC = () => {
     const [success, setSuccess] = useState<boolean>(false);
     const [validationError, setValidationError] = useState<string | null>(null);
 
-    const [postData, apiData, isLoading, error] = useApi(`http://localhost:5000/auth/create`, 'POST', '');
+    const [postData, apiData, isLoading, error] = useApi(`${import.meta.env.VITE_APP_SERVER_URL}/auth/create`, 'POST', '');
 
     useEffect(() => {
         if (apiData) {

@@ -27,7 +27,7 @@ const ProductPage: React.FC = () => {
     const [fetchApi, response, isLoading] = useFetch()
 
     useEffect(() => {
-        fetchApi(`http://localhost:5000/product/${params?.id}`, '');
+        fetchApi(`${import.meta.env.VITE_APP_SERVER_URL}/product/${params?.id}`, '');
     }, [])
 
     useEffect(() => {

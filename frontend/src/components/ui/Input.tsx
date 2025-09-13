@@ -8,7 +8,7 @@ const Input: React.FC<{
     type: InputType,
     placeholder: string,
     required: boolean,
-    inputRef: RefObject<HTMLInputElement | null>
+    inputRef?: RefObject<HTMLInputElement | null>
     name?: string,
     readOnly?: boolean,
     value?: string | number | undefined | readonly string[],

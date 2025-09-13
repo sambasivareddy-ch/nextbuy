@@ -22,16 +22,18 @@ const addressSlice = createSlice({
         addToAddress(state, action) {
             const newAddress: AddressInfo = action.payload.address;
 
-            const pkey = newAddress.house_number + newAddress.street + newAddress.city + newAddress.pincode
-            if (!state.addresses[pkey]) {
-                state.addresses[pkey] = {
-                    address: newAddress
-                }
-                state.count += 1
+            const pkey = newAddress.pincode
+            state.addresses[pkey] = {
+                address: newAddress
             }
+            state.count += 1
+        },
+        clearAddress(state) {
+            state.addresses = {},
+            state.count = 0
         }
     }
 })
 
-export const { addToAddress } = addressSlice.actions;
+export const { addToAddress, clearAddress } = addressSlice.actions;
 export default addressSlice.reducer;

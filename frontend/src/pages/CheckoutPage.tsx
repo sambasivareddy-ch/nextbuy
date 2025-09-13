@@ -7,24 +7,29 @@ import PageSetter from "../components/product-ui/PageSetter";
 import PageNavigation from "../components/product-ui/PageNavigation";
 import AddressSection from "../components/product-ui/AddressSection";
 import CartProduct from "../components/product-ui/CartProduct";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import RemoveIcon from '@mui/icons-material/Remove';
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import chip from "../assets/chip.png";
 import Loading from "../components/ui/Loading";
 import Confirm from "../components/ui/Confirm";
+import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
+import Toast from "../components/ui/Toast";
 
 import type { RootState } from "../store/store";
 import { addressState, addToAddress } from "../store/addressSlice";
 import { AddressInfo } from "../types/types";
 import styles from "../styles/checkout.module.css";
 
+import useApi from "../hooks/useApi";
+import useFetch from "../hooks/useFetch";
+
 const CheckoutPage: React.FC = () => {
     const location = useLocation();
     const dispatch = useDispatch();
     const addresses: addressState = useSelector((state: RootState) => state.address);
     const cart = useSelector((state: RootState) => state.cart);
+    const userInfo: any = useSelector((state: RootState) => state.user);
 
     const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
     const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
@@ -37,7 +42,16 @@ const CheckoutPage: React.FC = () => {
     const stateRef = useRef<HTMLInputElement>(null);
     const countryRef = useRef<HTMLInputElement>(null);
     const pincodeRef = useRef<HTMLInputElement>(null);
-    const phoneRef = useRef<HTMLInputElement>(null)
+    const phoneRef = useRef<HTMLInputElement>(null);
+
+    const [addressName, setAddressName] = useState('');
+    const [addressHouseNumber, setAddressHouseNumber] = useState('');
+    const [addressStreet, setAddressStreet] = useState('');
+    const [addressCity, setAddressCity] = useState('');
+    const [addressState, setAddressState] = useState('');
+    const [addressCountry, setAddressCountry] = useState('');
+    const [addressPincode, setAddressPincode] = useState('');
+    const [addressPhone, setAddressPhone] = useState('');
 
     const cardOwnerNameRef = useRef<HTMLInputElement>(null);
     const cardNumberRef = useRef<HTMLInputElement>(null);
@@ -48,6 +62,18 @@ const CheckoutPage: React.FC = () => {
     const [cardOwnerNameState, setCardOwnerNameState] = useState('');
     const [expDateState, setExpDateState] = useState('');
 
+    const [apiCaller, apiData, ___] = useFetch();
+    useEffect(() => {
+        const fetchAddress = async () => {
+            await apiCaller(`${import.meta.env.VITE_APP_SERVER_URL}/user/address/${userInfo.user.id}`, userInfo?.token);
+        }
+
+        fetchAddress();
+    }, [userInfo]);
+
+
+    const [modifyAddressApiCaller, ____, isAddressUpdating, isAddressUpdatingCauseError] = useApi('${import.meta.env.VITE_APP_SERVER_URL}/user/address', 'PUT', userInfo?.token);
+
     useEffect(() => {
         if (isPaymentProcessing) {
             setTimeout(() => {
@@ -57,25 +83,75 @@ const CheckoutPage: React.FC = () => {
         }
     }, [isPaymentProcessing])
 
-    const addAddressFormSubmitHandler = (e: FormEvent) => {
+    useEffect(() => {
+        if (apiData) {
+            const newAddress: AddressInfo = {
+                name: apiData[0]?.name,
+                house_number: apiData[0]?.houseNumber,
+                street: apiData[0]?.street,
+                city: apiData[0]?.city,
+                state: apiData[0]?.state,
+                country: apiData[0]?.country,
+                pincode: apiData[0]?.pincode,
+                phone: apiData[0]?.phone
+            }
+    
+            dispatch(addToAddress({
+                address: newAddress
+            }))
+        }
+    }, [apiData])
+
+    useEffect(() => {
+        if (addresses.count) {
+            Object.entries(addresses.addresses).forEach(userAddress => {
+                if (userAddress[1].address.name) {
+                    setAddressName(userAddress[1].address.name);
+                    setAddressHouseNumber(userAddress[1].address.house_number);
+                    setAddressState(userAddress[1].address.state);
+                    setAddressStreet(userAddress[1].address.street);
+                    setAddressCity(userAddress[1].address.city);
+                    setAddressCountry(userAddress[1].address.country);
+                    setAddressPhone(userAddress[1].address.phone);
+                    setAddressPincode(userAddress[1].address.pincode);
+                }
+            });
+        }
+    }, [addresses]);
+
+    const editAddressFormSubmitHandler = async (e: FormEvent) => {
         e.preventDefault()
 
-        const newAddress: AddressInfo = {
-            name: nameRef.current?.value!,
-            house_number: houseNumberRef.current?.value!,
-            street: streetRef.current?.value!,
-            city: cityRef.current?.value!,
-            state: stateRef.current?.value!,
-            country: countryRef.current?.value!,
-            pincode: pincodeRef.current?.value!,
-            phone: phoneRef.current?.value!
+        await modifyAddressApiCaller({
+            customer_id: userInfo.user.id,
+            name: addressName,
+            houseNumber: addressHouseNumber,
+            street: addressStreet,
+            city: addressCity,
+            state: addressState,
+            country: addressCountry,
+            pincode: addressPincode,
+            phone: addressPhone
+        });
+
+        if (!isAddressUpdatingCauseError) {
+            const newAddress: AddressInfo = {
+                name: nameRef.current?.value!,
+                house_number: houseNumberRef.current?.value!,
+                street: streetRef.current?.value!,
+                city: cityRef.current?.value!,
+                state: stateRef.current?.value!,
+                country: countryRef.current?.value!,
+                pincode: pincodeRef.current?.value!,
+                phone: phoneRef.current?.value!
+            }
+
+            dispatch(addToAddress({
+                address: newAddress
+            }))
+
+            setShowAddAddressForm(false);
         }
-
-        dispatch(addToAddress({
-            address: newAddress
-        }))
-
-        setShowAddAddressForm(false);
     }
 
     const creditCardPaymentSubmitHandler = (e: FormEvent) => {
@@ -112,38 +188,40 @@ const CheckoutPage: React.FC = () => {
                                 <div className={styles['address-main_header']}>
                                     <h3>Address</h3>
                                     {!showAddAddressForm && <button onClick={() => { setShowAddAddressForm(true) }}>
-                                        <AddCircleIcon />
+                                        <EditIcon />
                                     </button>}
                                     {showAddAddressForm && <button onClick={() => { setShowAddAddressForm(false) }}>
-                                        <RemoveIcon />
+                                        <CloseIcon />
                                     </button>}
                                 </div>
                                 {showAddAddressForm &&
-                                    <form className={styles['add-address_form']} onSubmit={addAddressFormSubmitHandler}>
-                                        <Input type="text" placeholder="Name" required={true} inputRef={nameRef} />
-                                        <Input type="text" placeholder="House No." required={true} inputRef={houseNumberRef} />
-                                        <Input type="text" placeholder="Street" required={true} inputRef={streetRef} />
-                                        <Input type="text" placeholder="City" required={true} inputRef={cityRef} />
-                                        <Input type="text" placeholder="State" required={true} inputRef={stateRef} />
-                                        <Input type="text" placeholder="Country" required={true} inputRef={countryRef} />
-                                        <Input type="text" placeholder="Pincode" required={true} inputRef={pincodeRef} />
-                                        <Input type="text" placeholder="Phone Number" required={true} inputRef={phoneRef} />
-                                        <Button type="submit" button_text="Add Address" />
+                                    <form className={styles['add-address_form']} onSubmit={editAddressFormSubmitHandler}>
+                                        <Input type="text" placeholder="Name" required={true} value={addressName} onChange={(e) => setAddressName(e.target.value)} />
+                                        <Input type="text" placeholder="House No." required={true} value={addressHouseNumber} onChange={(e) => setAddressHouseNumber(e.target.value)} />
+                                        <Input type="text" placeholder="Street" required={true} value={addressStreet} onChange={(e) => setAddressStreet(e.target.value)} />
+                                        <Input type="text" placeholder="City" required={true} value={addressCity} onChange={(e) => setAddressCity(e.target.value)} />
+                                        <Input type="text" placeholder="State" required={true} value={addressState} onChange={(e) => setAddressState(e.target.value)} />
+                                        <Input type="text" placeholder="Country" required={true} value={addressCountry} onChange={(e) => setAddressCountry(e.target.value)} />
+                                        <Input type="text" placeholder="Pincode" required={true} value={addressPincode} onChange={(e) => setAddressPincode(e.target.value)} />
+                                        <Input type="text" placeholder="Phone Number" required={true} value={addressPhone} onChange={(e) => setAddressPhone(e.target.value)} />
+                                        <Button type="submit" button_text="Edit Address" />
                                     </form>
                                 }
                             </div>
                             {addresses.count !== 0 && Object.entries(addresses.addresses).map(([_, address]) => {
-                                return <AddressSection
-                                    name={address.address.name}
-                                    house_number={address.address.house_number}
-                                    street={address.address.street}
-                                    city={address.address.city}
-                                    state={address.address.state}
-                                    country={address.address.country}
-                                    pincode={address.address.pincode}
-                                    phone={address.address.phone}
-                                    key={Math.random()}
-                                />
+                                if (address.address?.name) {
+                                    return <AddressSection
+                                        name={address.address.name}
+                                        house_number={address.address.house_number}
+                                        street={address.address.street}
+                                        city={address.address.city}
+                                        state={address.address.state}
+                                        country={address.address.country}
+                                        pincode={address.address.pincode}
+                                        phone={address.address.phone}
+                                        key={Math.random()}
+                                    />
+                                }
                             })}
                             {addresses.count === 0 && <p>Please add an address to order</p>}
                         </div>
@@ -202,6 +280,8 @@ const CheckoutPage: React.FC = () => {
                 document.getElementById("confirm")!
             )}
         </div>
+        {isAddressUpdating && <Toast type="info" message="Updating the Address..." />}
+        {isAddressUpdatingCauseError && <Toast type="failure" message="Updating the Address failed..." />}
     </PageSetter>
 }
 

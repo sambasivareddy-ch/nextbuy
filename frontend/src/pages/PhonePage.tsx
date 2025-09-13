@@ -9,7 +9,7 @@ const PhonePage: React.FC = () => {
     const [fetchApi, data, isLoading] = useFetch()
 
     useEffect(() => {
-        fetchApi('http://localhost:5000/category/phone', '')
+        fetchApi(`${import.meta.env.VITE_APP_SERVER_URL}/category/phone`, '')
     }, [])
 
     return (

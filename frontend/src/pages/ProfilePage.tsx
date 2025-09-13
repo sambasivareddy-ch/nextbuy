@@ -1,6 +1,6 @@
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import PageSetter from "../components/product-ui/PageSetter";
 import PageNavigation from "../components/product-ui/PageNavigation";
@@ -10,10 +10,12 @@ import Loading from "../components/ui/Loading";
 import Toast from "../components/ui/Toast";
 import styles from "../styles/profile.module.css";
 
-import { UserInfo } from '../types/types';
+import { UserInfo, AddressInfo } from '../types/types';
 import { RootState } from "../store/store";
 import useFetch from "../hooks/useFetch";
 import useApi from "../hooks/useApi";
+
+import { addToAddress } from "../store/addressSlice";
 
 const ProfilePage: React.FC<{
     user: UserInfo | null, 
@@ -21,6 +23,7 @@ const ProfilePage: React.FC<{
     const userInfo: any = useSelector<RootState>((state) => state.user);
     const location = useLocation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const userNameRef = useRef<HTMLInputElement>(null);
     const emailAddressRef = useRef<HTMLInputElement>(null);
@@ -42,14 +45,33 @@ const ProfilePage: React.FC<{
     const [apiCaller, apiData, isLoading] = useFetch();
     useEffect(() => {
         const fetchAddress = async () => {
-            await apiCaller(`http://localhost:5000/user/address/${userInfo.user.id}`, userInfo?.token);
+            await apiCaller(`${import.meta.env.VITE_APP_SERVER_URL}/user/address/${userInfo.user.id}`, userInfo?.token);
         }
 
         fetchAddress();
     }, [userInfo]);
 
-    const [newAddressApiCaller, _, isNewAddressSaving, isNewAddressSaveCauseError] = useApi('http://localhost:5000/user/address', "POST", userInfo?.token);
-    const [modifyAddressApiCaller, ____, isAddressUpdating, isAddressUpdatingCauseError] = useApi('http://localhost:5000/user/address', 'PUT', userInfo?.token);
+    useEffect(() => {
+        if (apiData) {
+            const newAddress: AddressInfo = {
+                name: apiData[0]?.name,
+                house_number: apiData[0]?.houseNumber,
+                street: apiData[0]?.street,
+                city: apiData[0]?.city,
+                state: apiData[0]?.state,
+                country: apiData[0]?.country,
+                pincode: apiData[0]?.pincode,
+                phone: apiData[0]?.phone
+            }
+    
+            dispatch(addToAddress({
+                address: newAddress
+            }))
+        }
+    }, [apiData])
+
+    const [newAddressApiCaller, _, isNewAddressSaving, isNewAddressSaveCauseError] = useApi(`${import.meta.env.VITE_APP_SERVER_URL}/user/address`, "POST", userInfo?.token);
+    const [modifyAddressApiCaller, ____, isAddressUpdating, isAddressUpdatingCauseError] = useApi(`${import.meta.env.VITE_APP_SERVER_URL}/user/address`, 'PUT', userInfo?.token);
 
     const addressUpdateHandler = async (e: FormEvent) => {
         e.preventDefault();

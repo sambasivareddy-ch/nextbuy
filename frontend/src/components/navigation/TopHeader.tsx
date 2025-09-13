@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import NavigationLink from "./NavigationLink";
 import Button from "../ui/Button";
 import { clearUser } from "../../store/userSlice";
+import { clearAddress } from "../../store/addressSlice";
 import { FavoriteIcon, CartIcon, UserIcon, LogoutBtnIcon } from "../icons/icons";
 
 import type { RootState } from "../../store/store";
@@ -29,6 +30,7 @@ const TopHeader: React.FC = () => {
 
     const logoutBtnHandler = () => {
         dispatcher(clearUser());
+        dispatcher(clearAddress());
         navigate('/');
     }
 

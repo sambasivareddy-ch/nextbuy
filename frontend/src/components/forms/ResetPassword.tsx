@@ -16,7 +16,7 @@ const ResetPassword: React.FC = () => {
     const [success, setSuccess] = useState<boolean>(false);
     const [validationError, setValidationError] = useState<string | null>(null);
 
-    const [apiCaller, apiData, isLoading, error] = useApi(`http://localhost:5000/auth/reset-password`, 'PUT', '');
+    const [apiCaller, apiData, isLoading, error] = useApi(`${import.meta.env.VITE_APP_SERVER_URL}/auth/reset-password`, 'PUT', '');
 
     useEffect(() => {
         if (apiData) {
