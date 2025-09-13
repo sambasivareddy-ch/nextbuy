@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import PageSetter from "../components/product-ui/PageSetter";
 import PageNavigation from "../components/product-ui/PageNavigation";
@@ -14,7 +14,7 @@ import { ShippingIcon, InHouseIcon, GuaranteeIcon } from "../components/icons/ic
 import useFetch from "../hooks/useFetch";
 import { addToCart } from "../store/cartSlice";
 import { addToWishlist } from "../store/wishlistSlice";
-
+import { RootState } from "../store/store";
 import styles from "../styles/productpage.module.css";
 
 const ProductPage: React.FC = () => {
@@ -23,6 +23,8 @@ const ProductPage: React.FC = () => {
     const params = useParams();
     const [isAddedToCart, setIsAddedToCart] = useState(false);
     const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
+    const [showPleaseLoginMessage, setShowPleaseLoginMessage] = useState(false);
+    const userInfo: any = useSelector<RootState>((state) => state.user)
 
     const [fetchApi, response, isLoading] = useFetch()
 
@@ -42,21 +44,35 @@ const ProductPage: React.FC = () => {
         }, 3000)
     }, [isAddedToWishlist])
 
+    useEffect(() => {
+        setTimeout(() => {
+            setShowPleaseLoginMessage(false);
+        }, 5000)
+    }, [showPleaseLoginMessage])
+
     const addToCartClickHandler = () => {
         if (response) {
-            dispatch(addToCart({
-                product: response.product,
-            }))
-            setIsAddedToCart(true);
+            if (userInfo.isAuthenticated) {
+                dispatch(addToCart({
+                    product: response.product,
+                }))
+                setIsAddedToCart(true);
+            } else {
+                setShowPleaseLoginMessage(true);
+            }
         }
     }
 
     const addToWishlistClickHandler = () => {
         if (response) {
-            dispatch(addToWishlist({
-                product: response.product,
-            }))
-            setIsAddedToWishlist(true);
+            if (userInfo.isAuthenticated) {
+                dispatch(addToWishlist({
+                    product: response.product,
+                }))
+                setIsAddedToWishlist(true);
+            } else {
+                setShowPleaseLoginMessage(true);
+            }
         }
     }
 
@@ -130,6 +146,10 @@ const ProductPage: React.FC = () => {
                 )}
                 {isAddedToWishlist && createPortal(
                     <Toast type="success" message="Successfully added to Wishlist!!"/>,
+                    document.getElementById('toast')!
+                )}
+                {showPleaseLoginMessage && createPortal(
+                    <Toast type="info" message="Please Login to perform add wishlist/cart!!"/>,
                     document.getElementById('toast')!
                 )}
             </div>
