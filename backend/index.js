@@ -23,7 +23,7 @@ const app = express()
 // Configure tha application with required packages
 config();
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'pug');
@@ -34,6 +34,22 @@ app.use(session({
     saveUninitialized: false,
     cookie: { secure: false }
 }));
+
+app.use(
+    cors({
+        origin: (origin, callback) => {
+            if (!origin || process.env.ALLOWEDORIGIN.includes(origin)) {
+                // Allow the request from allowed origins or if no origin is provided (e.g., mobile apps)
+                callback(null, true);
+            } else {
+                // Reject requests from other origins
+                callback(new Error("Not allowed by CORS"), false);
+            }
+        },
+        methods: "GET,POST,PUT,DELETE,PATCH,OPTIONS",
+        credentials: true,
+    })
+);
 
 // Base route
 app.get('/hello', (req, res) => {
